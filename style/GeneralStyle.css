@@ -1,0 +1,118 @@
+header {
+    height: 70px;
+    padding: 20px;
+    background-color: rgb(143, 168, 192);
+    
+}
+
+section h1  {
+
+    font-size: 2rem;
+    text-align: center;
+    
+}
+
+#banner {
+
+    text-align: center;
+    padding: 1%;
+    background-color: #2b66b4;
+    
+}
+
+body {
+
+    background-color: rgb(223, 217, 217);
+    margin-top: 0%;
+    margin-bottom: 0%;
+    margin-left: 0%;
+    margin-right: 0%;   
+    font-size: 1rem;
+    font-family: 'Gideon Roman', cursive,'Open Sans',  sans-serif, "Times New Roman", Times, serif ;
+    
+}
+h2 {
+    font-size: 1.5rem;
+}
+h3 {
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+nav {
+
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    height: 20px;
+}
+
+.navLink {
+
+    font-weight: bold;
+    font-size: 1rem;
+    background-color: rgb(27, 34, 78);
+    color: white;
+    
+    padding: 5px 15px;
+    margin: 0px 5px 0px 5px;
+    border-radius: 50px;
+}
+
+a:hover {
+    
+    color: #114a94;
+  
+}
+
+#current {
+
+    font-weight: bold;
+    font-size: 1rem;
+    background-color: white;
+    color: rgb(27, 34, 78);
+    padding: 5px 15px;
+    border-radius: 50px; 
+
+}
+
+img[id="logo"] {
+
+    border: 2px solid;
+    border-color: rgb(25, 10, 49);
+    float: left;
+}
+
+article {
+    
+    border-bottom: solid rgb(39, 38, 43);
+
+}
+
+:focus {
+
+    outline:3px solid rgb(0, 255, 255);
+    background:rgb(248, 248, 248);
+    color:rgb(21, 1, 59);
+    
+    }
+
+::placeholder {
+
+    color: black;
+    opacity: 1;
+}
+.footer-links {
+    color: rgb(0, 139, 128);
+}
+footer {
+    
+    display: flex;
+    justify-content: space-between;
+    width: 96%;
+    padding-left: 2%;
+    padding-right: 2%;
+    background-color: rgb(45, 21, 83);
+    color: white;
+    text-align: center;
+  }

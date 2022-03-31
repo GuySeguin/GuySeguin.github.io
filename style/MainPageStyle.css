@@ -1,0 +1,143 @@
+/*Small Screens*/
+@media only screen and (max-width: 699px) {
+  form {
+
+    width: 80%;
+    margin: 3% 10% 15% 10%;
+    
+  }
+  .grid-container {
+  
+    display: grid;
+    gap: 15px;
+    margin-left: 10%;
+    margin-right: 10%;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    
+  }
+  .grid-item {
+
+    padding: 2%;
+    background-color: rgb(221, 141, 253);
+  }
+}
+/*Medium Screens*/
+@media only screen and ( min-width: 700px) {
+
+  form {
+
+    width: 60%;
+    margin: 3% 20% 3% 20%;
+    
+  }
+
+  .grid-container {
+  
+    display: grid;
+    width: 80%;
+    gap: 15px;
+    margin-left: 10%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    
+  }
+  .grid-item {
+    padding: 2%;
+    background-color: rgb(221, 141, 253);
+  }
+}
+/*Large Screens*/
+  @media only screen and ( min-width: 1000px) {
+    body {
+      
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+    }
+    main {
+
+    display:flex;
+    width: 1000px;
+    flex-direction: column;
+    align-items: center;
+      
+    }
+
+    header {
+      width: 96%;
+    }
+
+    #banner {
+        width: 98%;
+    }
+
+    form {
+      width: 600px;
+    }
+  
+    .grid-container {
+  
+     display: grid;
+      width: 800px;
+      gap: 15px;
+      margin-left: 100px;
+      margin-right: 100px;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+    
+    }
+  .grid-item {
+
+    padding: 20px;
+    background-color: rgb(221, 141, 253);
+  }
+}
+  /*General Styling for all viewports*/
+main h2 {
+  text-align: center;
+}
+form {
+  text-align: center;
+}
+fieldset {
+  background-color: rgb(215, 253, 253);
+  border: 2px solid rgb(33, 69, 189);
+  font-weight: bold;
+  border-radius: 3%;
+  
+}
+
+:required {
+
+  border: 2px solid rgb(2, 247, 112);
+}
+
+button, #reset {
+
+  font-weight: bold;
+  background-color: rgb(27, 34, 78);
+  color: white;
+  padding: 5px 15px;
+  border-radius: 50px;
+  cursor:pointer;
+}
+.input {
+  display: block;
+  width: 70%;
+  margin: auto;
+  
+}
+main {
+    background-color: aliceblue;
+}
+form p {
+  background-color: rgb(181, 186, 235);
+  padding: 2%;
+  border: 2px solid rgb(33, 69, 189);
+  
+  border-radius: 5%;
+}
+#buttons {
+  float: right;
+}

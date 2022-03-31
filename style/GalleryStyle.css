@@ -1,0 +1,41 @@
+
+section img {
+    
+    float: right;
+    width: auto;
+}
+img {
+
+    border: solid black;
+}
+main {
+    padding: 2%;
+}
+.navigation {
+    
+    width: 98%;
+    padding: 1%;
+    justify-content: space-around;
+    align-items: center;
+    height: 20px;
+    background-color: rgb(72, 72, 196);
+}
+
+#galleryBody {
+
+    background-color: rgb(223, 217, 217);
+    
+}
+p::first-letter {
+
+    color: rgb(35, 4, 65);
+    font-size: 2rem;
+}
+section {
+    border-bottom: solid rgb(39, 38, 43);
+}
+
+#flex-container {
+
+    align-items: flex-end;
+}
