@@ -1,18 +1,16 @@
 /*Small Screens*/
 @media only screen and (max-width: 699px) {
-  form {
-
-    width: 80%;
-    margin: 3% 10% 15% 10%;
-    
-  }
+  
+  
   .grid-container {
   
     display: grid;
     gap: 15px;
     margin-left: 10%;
     margin-right: 10%;
+    grid-template-columns: 1fr;
     grid-template-rows:  1fr 1fr 1fr 1fr 1fr 1fr ;
+    margin-bottom: 2%;
     
   }
   .grid-item {
@@ -23,13 +21,11 @@
 }
 /*Medium Screens*/
 @media only screen and ( min-width: 700px) {
-
-  form {
-
-    width: 60%;
-    margin: 3% 20% 3% 20%;
-    
+  .columnspan {
+    grid-column: 1 / 3;
   }
+ 
+  
 
   .grid-container {
   
@@ -39,6 +35,7 @@
     margin-left: 10%;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
+    margin-bottom: 2%;
     
   }
   .grid-item {
@@ -49,9 +46,12 @@
 
   /*General Styling for all viewports*/
   :root {
-    --blue: #1e90ff;
+    --blue: rgb(143, 168, 192);
     --white: aliceblue;;
     --purple: #e4b1fc;
+    --darkBlue: #2b66b4;
+    --darkerBlue: rgb(27, 34, 78);
+    --darkpurple: rgb(45, 21, 83);
   }
 main h2 {
   text-align: center;
@@ -74,7 +74,7 @@ main {
 header {
     height: 70px;
     padding: 20px;
-    background-color: rgb(143, 168, 192);
+    background-color: var(--blue)
     
 }
 
@@ -89,7 +89,8 @@ section h1  {
 
     text-align: center;
     padding: 1%;
-    background-color: #2b66b4;
+    background-color: var(--darkBlue);
+    margin-bottom: 2%;
     
 }
 
@@ -124,8 +125,8 @@ nav {
 
     font-weight: bold;
     font-size: 1rem;
-    background-color: rgb(27, 34, 78);
-    color: white;
+    background-color: var(--darkerBlue);
+    color: var(--white);
     
     padding: 5px 15px;
     margin: 0px 5px 0px 5px;
@@ -134,7 +135,7 @@ nav {
 
 a:hover {
     
-    color: #114a94;
+    color: var(--darkBlue);
   
 }
 
@@ -142,8 +143,8 @@ a:hover {
 
     font-weight: bold;
     font-size: 1rem;
-    background-color: white;
-    color: rgb(27, 34, 78);
+    background-color: var(--white);
+    color: var(--darkerBlue);
     padding: 5px 15px;
     border-radius: 50px; 
 
@@ -156,12 +157,6 @@ img[id="logo"] {
     float: left;
 }
 
-article {
-    
-    border-bottom: solid rgb(39, 38, 43);
-
-}
-
 :focus {
 
     outline:3px solid rgb(0, 255, 255);
@@ -170,22 +165,20 @@ article {
     
     }
 .footer-links {
-    color: rgb(0, 139, 128);
+    color: rgb(149, 252, 243);
 }
 footer {
     
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     width: 96%;
     padding-left: 2%;
     padding-right: 2%;
-    background-color: rgb(45, 21, 83);
-    color: white;
+    background-color: var(--darkpurple);
+    color: var(--white);
     text-align: center;
   }
-.columnspan {
-  grid-column: 1 / 3;
-}
+
 .gridImage {
   display: block;
   margin-left: auto;
