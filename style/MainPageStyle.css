@@ -46,53 +46,7 @@
     background-color: rgb(221, 141, 253);
   }
 }
-/*Large Screens*/
-  @media only screen and ( min-width: 1000px) {
-    body {
-      
-      display: flex;
-      flex-direction: column;
-      align-items: center;
 
-    }
-    main {
-
-    display:flex;
-    width: 1000px;
-    flex-direction: column;
-    align-items: center;
-      
-    }
-
-    header {
-      width: 96%;
-    }
-
-    #banner {
-        width: 98%;
-    }
-
-    form {
-      width: 600px;
-    }
-  
-    .grid-container {
-  
-     display: grid;
-      width: 800px;
-      gap: 15px;
-      margin-left: 100px;
-      margin-right: 100px;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-    
-    }
-  .grid-item {
-
-    padding: 20px;
-    background-color: rgb(221, 141, 253);
-  }
-}
   /*General Styling for all viewports*/
 main h2 {
   text-align: center;
