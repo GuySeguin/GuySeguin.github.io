@@ -12,13 +12,13 @@
     gap: 15px;
     margin-left: 10%;
     margin-right: 10%;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows:  1fr 1fr 1fr 1fr 1fr 1fr ;
     
   }
   .grid-item {
 
     padding: 2%;
-    background-color: rgb(221, 141, 253);
+    background-color: var(--purple);
   }
 }
 /*Medium Screens*/
@@ -38,12 +38,12 @@
     gap: 15px;
     margin-left: 10%;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
     
   }
   .grid-item {
     padding: 2%;
-    background-color: rgb(221, 141, 253);
+    background-color: var(--purple);
   }
 }
 
@@ -51,11 +51,11 @@
   :root {
     --blue: #1e90ff;
     --white: aliceblue;;
+    --purple: #e4b1fc;
   }
 main h2 {
   text-align: center;
 }
-
 
 
 .input {
@@ -169,12 +169,6 @@ article {
     color:rgb(21, 1, 59);
     
     }
-
-::placeholder {
-
-    color: black;
-    opacity: 1;
-}
 .footer-links {
     color: rgb(0, 139, 128);
 }
@@ -191,4 +185,18 @@ footer {
   }
 .columnspan {
   grid-column: 1 / 3;
+}
+.gridImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+img:hover {
+    transition: 1s;
+    transform: scale(2,2);
+}
+h1, h2, h3 {
+  text-align: center;
 }
