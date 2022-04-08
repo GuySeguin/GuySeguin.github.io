@@ -48,34 +48,16 @@
 }
 
   /*General Styling for all viewports*/
+  :root {
+    --blue: #1e90ff;
+    --white: aliceblue;;
+  }
 main h2 {
   text-align: center;
 }
-form {
-  text-align: center;
-}
-fieldset {
-  background-color: rgb(215, 253, 253);
-  border: 2px solid rgb(33, 69, 189);
-  font-weight: bold;
-  border-radius: 3%;
-  
-}
 
-:required {
 
-  border: 2px solid rgb(2, 247, 112);
-}
 
-button, #reset {
-
-  font-weight: bold;
-  background-color: rgb(27, 34, 78);
-  color: white;
-  padding: 5px 15px;
-  border-radius: 50px;
-  cursor:pointer;
-}
 .input {
   display: block;
   width: 70%;
@@ -83,15 +65,9 @@ button, #reset {
   
 }
 main {
-    background-color: aliceblue;
+    background-color: var(--white);
 }
-form p {
-  background-color: rgb(181, 186, 235);
-  padding: 2%;
-  border: 2px solid rgb(33, 69, 189);
-  
-  border-radius: 5%;
-}
+
 #buttons {
   float: right;
 }
@@ -213,3 +189,6 @@ footer {
     color: white;
     text-align: center;
   }
+.columnspan {
+  grid-column: 1 / 3;
+}
