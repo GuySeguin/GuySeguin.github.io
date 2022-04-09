@@ -1,13 +1,15 @@
 /*Small Screens*/
 @media only screen and (max-width: 799px) {
   nav {
-
+    
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-end;
 }
-
+.navLink {
+  margin: 30px;
+}
   .grid-container {
   
     display: grid;
@@ -128,8 +130,8 @@ h3 {
 }
 
 .navLink {
-
-    height: 20px;
+  
+    height: fit-content;
     font-weight: bold;
     font-size: 1rem;
     background-color: var(--darkerBlue);
@@ -178,6 +180,7 @@ footer {
   }
 
 .gridImage {
+
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -185,14 +188,17 @@ footer {
   margin-bottom: 2%;
 }
 img:hover {
+
     transition: 1s;
     transform: scale(2,2);
 }
 h1, h2, h3 {
+
   text-align: center;
 }
 
 .skip {
+
   position: absolute;
   left: -1993px;
   top: auto;
@@ -202,6 +208,7 @@ h1, h2, h3 {
 }
 
 .skip:focus {
+  
   position: static;
   width: auto;
   height: auto;
