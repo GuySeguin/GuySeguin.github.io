@@ -1,5 +1,5 @@
 /*Small Screens*/
-@media only screen and (max-width: 699px) {
+@media only screen and (max-width: 799px) {
   nav {
 
     display: flex;
@@ -25,8 +25,9 @@
     background-color: var(--purple);
   }
 }
+
 /*Medium Screens*/
-@media only screen and ( min-width: 700px) {
+@media only screen and ( min-width: 800px) {
 
   .columnspan {
 
@@ -65,7 +66,7 @@
 
     --blue: rgb(143, 168, 192);
     --white: rgb(233, 233, 233);
-    --purple: #d6ade9;
+    --purple: #e7bcfc;
     --darkBlue: #2b66b4;
     --darkerBlue: rgb(27, 34, 78);
     --darkpurple: rgb(45, 21, 83);
