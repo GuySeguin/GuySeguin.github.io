@@ -1,7 +1,15 @@
 /*Small Screens*/
 @media only screen and (max-width: 699px) {
-  
-  
+  nav {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    
+    
+    align-items: flex-end;
+}
+
   .grid-container {
   
     display: grid;
@@ -25,7 +33,14 @@
     grid-column: 1 / 3;
   }
  
-  
+  nav {
+
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    
+}
+
 
   .grid-container {
   
@@ -72,7 +87,7 @@ main {
   float: right;
 }
 header {
-    height: 70px;
+    height: 100px;
     padding: 20px;
     background-color: var(--blue)
     
@@ -113,21 +128,14 @@ h3 {
     text-align: center;
 }
 
-nav {
-
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    height: 20px;
-}
 
 .navLink {
-
+  height: 20px;
     font-weight: bold;
     font-size: 1rem;
     background-color: var(--darkerBlue);
     color: var(--white);
-    
+    width:fit-content;
     padding: 5px 15px;
     margin: 0px 5px 0px 5px;
     border-radius: 50px;
@@ -139,16 +147,7 @@ a:hover {
   
 }
 
-#current {
 
-    font-weight: bold;
-    font-size: 1rem;
-    background-color: var(--white);
-    color: var(--darkerBlue);
-    padding: 5px 15px;
-    border-radius: 50px; 
-
-}
 
 img[id="logo"] {
 
