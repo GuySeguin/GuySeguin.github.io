@@ -5,8 +5,6 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    
-    
     align-items: flex-end;
 }
 
@@ -17,7 +15,7 @@
     margin-left: 10%;
     margin-right: 10%;
     grid-template-columns: 1fr;
-    grid-template-rows:  1fr 1fr 1fr 1fr 1fr 1fr ;
+    grid-template-rows:  1fr 1fr 1fr 1fr 1fr 1fr;
     margin-bottom: 2%;
     
   }
@@ -29,8 +27,10 @@
 }
 /*Medium Screens*/
 @media only screen and ( min-width: 700px) {
+
   .columnspan {
-    grid-column: 1 / 3;
+
+    grid-column: 1/3;
   }
  
   nav {
@@ -54,6 +54,7 @@
     
   }
   .grid-item {
+
     padding: 2%;
     background-color: var(--purple);
   }
@@ -61,32 +62,27 @@
 
   /*General Styling for all viewports*/
   :root {
+
     --blue: rgb(143, 168, 192);
-    --white: aliceblue;;
+    --white: rgb(223, 217, 217);
     --purple: #e4b1fc;
     --darkBlue: #2b66b4;
     --darkerBlue: rgb(27, 34, 78);
     --darkpurple: rgb(45, 21, 83);
+    --lightblue: rgb(0, 255, 255);
+
   }
 main h2 {
   text-align: center;
 }
 
-
-.input {
-  display: block;
-  width: 70%;
-  margin: auto;
-  
-}
 main {
+
     background-color: var(--white);
 }
 
-#buttons {
-  float: right;
-}
 header {
+
     height: 100px;
     padding: 20px;
     background-color: var(--blue)
@@ -111,7 +107,7 @@ section h1  {
 
 body {
 
-    background-color: rgb(223, 217, 217);
+    background-color: var(--white);
     margin-top: 0%;
     margin-bottom: 0%;
     margin-left: 0%;
@@ -120,17 +116,19 @@ body {
     font-family: 'Gideon Roman', cursive,'Open Sans',  sans-serif, "Times New Roman", Times, serif ;
     
 }
+
 h2 {
     font-size: 1.5rem;
 }
+
 h3 {
     font-size: 1.25rem;
     text-align: center;
 }
 
-
 .navLink {
-  height: 20px;
+
+    height: 20px;
     font-weight: bold;
     font-size: 1rem;
     background-color: var(--darkerBlue);
@@ -142,8 +140,8 @@ h3 {
 }
 
 a:hover {
-    
-    color: var(--darkBlue);
+    background-color: var(--white);
+    color: var(--darkpurple);
   
 }
 
@@ -152,19 +150,19 @@ a:hover {
 img[id="logo"] {
 
     border: 2px solid;
-    border-color: rgb(25, 10, 49);
+    border-color: var(--darkpurple);
     float: left;
 }
 
 :focus {
 
-    outline:3px solid rgb(0, 255, 255);
-    background:rgb(248, 248, 248);
-    color:rgb(21, 1, 59);
+    outline:3px solid var(--lightblue);
+    background:var(--white);
+    color:var(--darkpurple);
     
     }
 .footer-links {
-    color: rgb(149, 252, 243);
+    color: var(--lightblue);
 }
 footer {
     
@@ -191,4 +189,19 @@ img:hover {
 }
 h1, h2, h3 {
   text-align: center;
+}
+
+.skip {
+  position: absolute;
+  left: -1993px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.skip:focus {
+  position: static;
+  width: auto;
+  height: auto;
 }
