@@ -1,15 +1,4 @@
-/*Small Screens*/
-@media only screen and (max-width: 799px) {
-  nav {
-    
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-end;
-}
-.navLink {
-  margin: 30px;
-}
+
   .grid-container {
   
     display: grid;
@@ -26,7 +15,7 @@
     padding: 2%;
     background-color: var(--purple);
   }
-}
+
 
 /*Medium Screens*/
 @media only screen and ( min-width: 800px) {
@@ -86,7 +75,7 @@ main {
 
 header {
 
-    height: 100px;
+    height: 20px;
     padding: 20px;
     background-color: var(--blue)
     
@@ -179,37 +168,10 @@ footer {
     text-align: center;
   }
 
-.gridImage {
 
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 2%;
-  margin-bottom: 2%;
-}
-img:hover {
 
-    transition: 1s;
-    transform: scale(2,2);
-}
 h1, h2, h3 {
 
   text-align: center;
 }
 
-.skip {
-
-  position: absolute;
-  left: -1993px;
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-
-.skip:focus {
-  
-  position: static;
-  width: auto;
-  height: auto;
-}
