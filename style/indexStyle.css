@@ -17,8 +17,6 @@
   }
 
 
-/*Medium Screens*/
-@media only screen and ( min-width: 800px) {
 
   .columnspan {
 
@@ -50,9 +48,11 @@
     padding: 2%;
     background-color: var(--purple);
   }
-}
 
-  /*General Styling for all viewports*/
+
+ a {
+  text-decoration: none;
+ }
   :root {
 
     --blue: rgb(143, 168, 192);
