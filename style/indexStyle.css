@@ -80,7 +80,9 @@ header {
     background-color: var(--blue)
     
 }
-
+#home {
+  margin-left: 20px;
+}
 section h1  {
 
     font-size: 2rem;
@@ -96,7 +98,9 @@ section h1  {
     margin-bottom: 2%;
     
 }
-
+select {
+  margin: 30px;
+}
 body {
 
     background-color: var(--white);
