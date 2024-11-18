@@ -48,7 +48,9 @@
     padding: 2%;
     background-color: var(--purple);
   }
-
+#browse, #races, #raceResults {
+  display: none;
+}
 
  a {
   text-decoration: none;
