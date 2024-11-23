@@ -1,20 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () { 
     const select = document.querySelector("#home select");
     select.addEventListener("change", () => {
-        alert(select.value);
         document.querySelector("#home").style.display = "none";
         document.querySelector("#browse").style.display = "block";
-        const testData = [
-            {raceId:1, name:"test", circuit:23},
-            {raceId:2, name:"test", circuit:23},
-            {raceId:3, name:"test", circuit:23},
-            {raceId:4, name:"test", circuit:23}
-        ]
-        browseView(testData);
+        const url = "https://www.randyconnolly.com/funwebdev/3rd/api/fi/races.php";
+       fetch(url).then(response => {if (response.ok) {return response.json()} else {throw new error("AAAAAAHHH!")}}).then(
+        data => {browseView(data)}
+       ).catch( error => {"AAAAAAAHHH!"});
     })
     function browseView(data) {
-        console.log("YAAAAY");
-        raceTable(data);
+        console.log(data);
+        //raceTable(data);
     }
 
     function raceTable(testData) {
