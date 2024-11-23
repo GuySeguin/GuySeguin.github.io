@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector("#home").style.display = "none";
         document.querySelector("#browse").style.display = "block";
         const url = "https://www.randyconnolly.com/funwebdev/3rd/api/fi/races.php";
-       fetch(url+"?season="+select.value).then(response => {if (response.ok) {return response.json()} else {throw new error("AAAAAAHHH!")}}).then(
+       fetch("https://www.randyconnolly.com/funwebdev/3rd/api/f1/races.php?season=2021").then(response => {if (response.ok) {return response.json()} else {throw new error("AAAAAAHHH!")}}).then(
         data => {browseView(data)}
        ).catch( error => {"AAAAAAAHHH!"});
     })
