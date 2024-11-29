@@ -42,7 +42,7 @@
     <main id="main">
      
     <article id="home">
-      <div>
+        <div>
         <p>
           
           Assignment #2 in Web 3512 at Mount Royal University <br>
@@ -65,13 +65,28 @@
       </div>
     </article>
     <article id="browse">
+      <dialog>
+        <p>LOADING! LOADING! LOADING!</p>
+      </dialog>
+      
       <section id="races"></section>
-      <table id="raceTable">
-       <caption>Please select a race:</caption>
+      <label for="races">Please Select a Race:</label>
+      <table name="races" id="raceTable">
+       
+      
       </table>
       <section id="raceResults">
         <div id="qualify"></div>
-        <div id="result"></div>
+        <table id="qualifyingTable">
+          <caption>Qualifying Results</caption>
+         
+         </table>
+        <div id="result">
+          <table id="resultTable">
+            <caption>Race Results</caption>
+           
+           </table>
+        </div>
       </section>
     </article>
 

@@ -64,6 +64,7 @@
     --darkerBlue: rgb(27, 34, 78);
     --darkpurple: rgb(45, 21, 83);
     --lightblue: rgb(0, 255, 255);
+    --black: rgb(0, 0, 0);
 
   }
 main h2 {
@@ -142,8 +143,13 @@ a:hover {
     color: var(--darkpurple);
   
 }
-
-
+.sort {
+ text-decoration: underline;
+ font-weight: bold;
+}
+label {
+  margin-left: 30px;
+}
 
 img[id="logo"] {
 
@@ -153,10 +159,11 @@ img[id="logo"] {
 }
 
 :focus {
+  box-shadow: 2px 2px 3px 2px inset rgba(175, 174, 174, 0.8);
 
-    outline:3px solid var(--lightblue);
+    
     background:var(--white);
-    color:var(--darkpurple);
+    color:var(--black);
     
     }
 .footer-links {
