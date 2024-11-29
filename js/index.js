@@ -15,37 +15,13 @@ document.addEventListener('DOMContentLoaded', function () {
         data = sortByRound(data);
 
         raceTable(data);
+        listeners(data);
     }
 
     function raceTable(data) {
         
-        const row1 = document.querySelector("#raceTable");
-        const tr = document.createElement("tr");
-        const th1 = document.createElement("th");
-        th1.textContent = "Race ID";
-        th1.setAttribute("id", "raceid");
-        const th2 = document.createElement("th");
-        th2.textContent = "Race Name";
-        th2.setAttribute("id", "rName");
-    const th3 = document.createElement("th");
-        th3.textContent = "Circuit";
-        th3.setAttribute("id", "rCircuit");
-        const th4 = document.createElement("th");
-        th4.textContent = "Date";
-        th4.setAttribute("id", "rDate");
-        const th5 = document.createElement("th");
-        th5.textContent = "Round";
-        th5.setAttribute("id", "rRound");
-    const th6 = document.createElement("th");
-        th6.textContent = "URL";
-        tr.appendChild(th1);
-        tr.appendChild(th2);
-        tr.appendChild(th3);
-        tr.appendChild(th4);
-        tr.appendChild(th5);
-        tr.appendChild(th6);
-        row1.appendChild(tr);
-
+        const row1 = document.querySelector("#raceTable tbody");
+       
         for (let r of data) {
             const nuTr = document.createElement("tr");
             nuTr.classList.add("raceRow");
@@ -77,55 +53,55 @@ document.addEventListener('DOMContentLoaded', function () {
         nuTr.appendChild(td7);
         row1.appendChild(nuTr);
         }
-        row1.addEventListener("click", (e)=> {
-            if (e.target.nodeName=="BUTTON") {
-                resultsTable(e.target.id);
-            } else if (e.target.nodeName=="TH") {
-                
-                if (e.target.id=="raceid") {
-                   
-                   row1.innerHTML = null;
-                    sortByID(data);
-                    raceTable(data);
-                  document.querySelector("#raceid").classList.add("sort");
-
-                } else if (e.target.id == "rName") {
-                    
-                    row1.innerHTML = null;
-                    sortByName(data);
-                    raceTable(data);
-                    document.querySelector("#rName").classList.add("sort");
-
-                } else if (e.target.id == "rCircuit") {
-                    
-                    row1.innerHTML = null;
-                    sortByCircuit(data);
-                    raceTable(data);
-                    document.querySelector("#rCircuit").classList.add("sort");
-
-                } else if (e.target.id == "rDate") {
-                    
-                    row1.innerHTML = null;
-                    sortByDate(data);
-                    raceTable(data);
-                    document.querySelector("#rDate").classList.add("sort");
-
-                } else if (e.target.id == "rRound") {
-                    
-                    row1.innerHTML = null;
-                    sortByRound(data);
-                    raceTable(data);
-                    document.querySelector("#rRound").classList.add("sort");
-
-                }
-                
-
-            }
-        })
+        
 
     }
-    
-    
+    function listeners(data) {
+    document.querySelector("#raceTable").addEventListener("click", (e)=> {
+        if (e.target.nodeName=="BUTTON") {
+            resultsTable(e.target.id);
+        } else if (e.target.nodeName=="TH") {
+            
+            if (e.target.id=="raceid") {
+               
+               document.querySelector("tbody").innerHTML = null;
+                sortByID(data);
+                raceTable(data);
+              document.querySelector("#raceid").classList.toggle("sort");
+
+            } else if (e.target.id == "rName") {
+                
+                document.querySelector("tbody").innerHTML = null;
+                sortByName(data);
+                raceTable(data);
+                document.querySelector("#rName").classList.toggle("sort");
+
+            } else if (e.target.id == "rCircuit") {
+                
+                document.querySelector("tbody").innerHTML = null;
+                sortByCircuit(data);
+                raceTable(data);
+                document.querySelector("#rCircuit").classList.toggle("sort");
+
+            } else if (e.target.id == "rDate") {
+                
+                document.querySelector("tbody").innerHTML = null;
+                sortByDate(data);
+                raceTable(data);
+                document.querySelector("#rDate").classList.toggle("sort");
+
+            } else if (e.target.id == "rRound") {
+                
+                document.querySelector("tbody").innerHTML = null;
+                sortByRound(data);
+                raceTable(data);
+                document.querySelector("#rRound").classList.toggle("sort");
+
+            }
+            
+
+        }
+    })}
     function sortByName(data) {
         data.sort((a,b)=>{
             return a.name.localeCompare(b.name);
