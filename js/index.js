@@ -1,14 +1,51 @@
 document.addEventListener('DOMContentLoaded', function () { 
 
+let selectSeason;
+    
+    function getSeasonData() {
+        let raceURL = "https://www.randyconnolly.com/funwebdev/3rd/api/f1/races.php?season="
+        let resultURL = "https://www.randyconnolly.com/funwebdev/3rd/api/f1/results.php?season="
+        let qualifyURL = "https://www.randyconnolly.com/funwebdev/3rd/api/f1/qualifying.php?season="
+       
+        let prom1 = fetch(raceURL+selectSeason).then(r => r.json())
+        let prom2 = fetch(resultURL+selectSeason).then(r => r.json())
+        let prom3 = fetch(qualifyURL+selectSeason).then(r => r.json())
+        console.log(selectSeason);
+        return Promise.all([prom1, prom2, prom3]);
+
+    }
     const select = document.querySelector("#home select");
-    select.addEventListener("change", () => {
+    select.addEventListener("change", (e) => {
+        selectSeason = e.target.value;
         document.querySelector("#home").style.display = "none";
         document.querySelector("#browse").style.display = "block";
         const url = "https://www.randyconnolly.com/funwebdev/3rd/api/f1/races.php";
-
-       fetch(url+"?season="+select.value).then(response => {if (response.ok) {return response.json()} else {throw new error("AAAAAAHHH!")}}).then(
-        data => {browseView(data)}
-       ).catch( error => {"AAAAAAAHHH!"});
+        let resultData;
+        let qualifyData;
+        let raceData = localStorage.getItem(`race${selectSeason}`);
+        if (!raceData) {
+            getSeasonData().then(data =>{
+                console.log(data)
+                browseView(data[0]);
+                resultData = data[1];
+                qualifyData = data[2];
+                console.log(resultData)
+                localStorage.setItem(`race${selectSeason}`, JSON.stringify(data[0]));
+                localStorage.setItem(`result${selectSeason}`, JSON.stringify(data[1]));
+                localStorage.setItem(`qualify${selectSeason}`, JSON.stringify(data[2]));
+                
+            }).catch(e=> {
+                console.log(e);
+            });
+        } else {
+            resultData = JSON.parse(localStorage.getItem(`result${selectSeason}`));
+        resultData = JSON.parse(localStorage.getItem(`qualify${selectSeason}`));
+            browseView(JSON.parse(raceData));
+        }
+       
+       //fetch(url+"?season="+select.value).then(response => {if (response.ok) {return response.json()} else {throw new error("AAAAAAHHH!")}}).then(
+      //  data => {browseView(data)}
+   //    ).catch( error => {"AAAAAAAHHH!"});
     })
     function browseView(data) {
         console.log(data);
