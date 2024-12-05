@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
 let selectSeason;
 let resultData;
 let qualifyData;
+let driverArray = [];
+let constructorArray = [];
+let circuitArray = [];
 //Promise Method for fetches
     function getSeasonData() {
         let raceURL = "https://www.randyconnolly.com/funwebdev/3rd/api/f1/races.php?season="
@@ -117,6 +120,8 @@ let qualifyData;
             
             resultsTable(resultsInfo);
            qualifyingTable(qualifyInfo);
+           qualListeners(qualifyInfo);
+           resultListeners(resultsInfo);
         } else if (e.target.nodeName=="TH") {
             wipeClasses();
             if (e.target.id=="raceid") {
@@ -159,6 +164,36 @@ let qualifyData;
 
         }
     })}
+    function qualListeners(qualifyThin) {
+        document.querySelector("#qualifyingTable").addEventListener("click", (e) => {
+            if (e.target && e.target.nodeName == "TH") {
+                wipeClasses();
+                document.querySelector("#qualifyingTable tbody").innerHTML = null;
+                if (e.target.id == "qpos") {
+                    sortByPosition(qualifyThin);
+                    qualifyingTable(qualifyThin);
+                    document.querySelector("#qpos").classList.toggle("sort");
+                } else if (e.target.id == "qdriv") {
+                    sortByDriver(qualifyThin);
+                    qualifyingTable(qualifyThin);
+                    document.querySelector("#qdriv").classList.toggle("sort");
+                } else if (e.target.id == "qconst") {
+                    sortByConstructor(qualifyThin);
+                    qualifyingTable(qualifyThin);
+                    document.querySelector("#qconst").classList.toggle("sort");
+                } else if (e.target.id == "q1" || e.target.id == "q2" || e.target.id == "q3") {
+                    sortByQualifier(qualifyThin);
+                    qualifyingTable(qualifyThin);
+                    document.querySelector(`#${e.target.id}`).classList.toggle("sort");
+                }
+                
+            }
+        })
+
+    }
+    function resultListeners(resultsInfo) {
+
+    }
     function resultsTable(raceResults) {
         const row1 = document.querySelector("#resultTable tbody");
        
@@ -190,6 +225,7 @@ let qualifyData;
             row1.appendChild(nuTr);
         }
     }
+    //Prints Ted items for the qualifying table.
     function qualifyingTable(raceyRaces) {
         const row1 = document.querySelector("#qualifyingTable tbody");
        
@@ -198,28 +234,28 @@ let qualifyData;
             const nuTr = document.createElement("tr");
             nuTr.classList.add("raceRow");
 
-            const td1 = document.createElement("td");
-            td1.textContent = r.position;
-            const td2 = document.createElement("td");
-            td2.textContent = `${r.driver.forename} ${r.driver.surname}`;
-            td2.setAttribute("data-driver", r.driver.id);
-            td2.classList.add("driver");
+            const ted1 = document.createElement("td");
+            ted1.textContent = r.position;
+            const ted2 = document.createElement("td");
+            ted2.textContent = `${r.driver.forename} ${r.driver.surname}`;
+            ted2.setAttribute("data-driver", r.driver.id);
+            ted2.classList.add("driver");
 
-            const td3 = document.createElement("td");
-            td3.textContent = r.constructor.name;
-            const td4 = document.createElement("td");
-            td4.textContent = r.laps;
-            const td5 = document.createElement("td");
-            td5.textContent = r.points;
-            const td6 = document.createElement("td");
-            td6.textContent = r.points;
+            const ted3 = document.createElement("td");
+            ted3.textContent = r.constructor.name;
+            const ted4 = document.createElement("td");
+            ted4.textContent = r.q1;
+            const ted5 = document.createElement("td");
+            ted5.textContent = r.q2;
+            const ted6 = document.createElement("td");
+            ted6.textContent = r.q3;
 
-            nuTr.appendChild(td1);
-            nuTr.appendChild(td2);
-            nuTr.appendChild(td3);
-            nuTr.appendChild(td4);
-            nuTr.appendChild(td5);
-            nuTr.appendChild(td6);
+            nuTr.appendChild(ted1);
+            nuTr.appendChild(ted2);
+            nuTr.appendChild(ted3);
+            nuTr.appendChild(ted4);
+            nuTr.appendChild(ted5);
+            nuTr.appendChild(ted6);
 
             row1.appendChild(nuTr);
         }
@@ -232,6 +268,60 @@ let qualifyData;
                 t.className = "";
             
         })
+    }
+    function sortByQualifier(data, id) {
+        if (id =="q1") {
+            data.sort((a,b) => {
+                if (a.q1 < b.q1) {
+                    return -1;
+                } else if (b.q1 < a.q1) {
+                    return 1;
+                }
+                return 0;
+            })
+        } else if (id == "q2") {
+            if (a.q2 < b.q2) {
+                return -1;
+            } else if (b.q2 < a.q2) {
+                return 1;
+            }
+            return 0;
+        } else {
+            data.sort((a,b)=> {if (a.q3 < b.q3) {
+                return -1;
+            } else if (b.q3 < a.q3) {
+                return 1;
+            }
+            return 0;
+        })
+    }
+    }
+    function sortByConstructor(data) {
+        data.sort((a,b)=>{
+            return a.constructor.name.localeCompare(b.constructor.name);
+        })
+        return data;
+    }
+    function sortByDriver(data) {
+        data.sort((a,b)=>{
+           
+            let aName = `${a.driver.forename} ${a.driver.surname}`;
+            let bName = `${b.driver.forename} ${b.driver.surname}`;
+            return aName.localeCompare(bName);
+        })
+        return data;
+    }
+    function sortByPosition(data) {
+       
+            data.sort((a,b)=>{
+                if (a.position < b.position) {
+                    return -1;
+                } else if (b.position < a.position) {
+                    return 1;
+                }
+                return 0;
+            })
+        return data;
     }
     function sortByName(data) {
         data.sort((a,b)=>{
@@ -273,5 +363,22 @@ let qualifyData;
     }
 
     })
-   
+   const Driver = class {
+    constructor(driv) {
+        this.name = `${driv.forename} ${driv.surname}`;
+        this.id = driv.id;
+        this.nationality = driv.nationality;
+        this.ref = driv.ref;
+
+    }
+    //Finish this!!!!!!!!!!!!!!!!!
+    generateCard() {
+        const seasonRes = resultData.filter(r => {
+            if (r.driver.id == this.id) {
+                return r;
+            }
+        })
+
+    }
+   }
 
