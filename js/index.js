@@ -167,6 +167,7 @@ let circuitArray = [];
     function qualListeners(qualifyThin) {
         document.querySelector("#qualifyingTable").addEventListener("click", (e) => {
             if (e.target && e.target.nodeName == "TH") {
+                sortByPosition(qualifyThin);
                 wipeClasses();
                 document.querySelector("#qualifyingTable tbody").innerHTML = null;
                 if (e.target.id == "qpos") {
@@ -191,8 +192,36 @@ let circuitArray = [];
         })
 
     }
-    function resultListeners(resultsInfo) {
-
+    function resultListeners(resultsThing) {
+        document.querySelector("#resultTable").addEventListener("click", (e) => {
+            if (e.target && e.target.nodeName == "TH") {
+                sortByPosition(resultsThing);
+                wipeClasses();
+                document.querySelector("#resultTable tbody").innerHTML = null;
+                if (e.target.id == "rpos") {
+                    sortByPosition(resultsThing);
+                    resultsTable(resultsThing);
+                    document.querySelector("#rpos").classList.toggle("sort");
+                } else if (e.target.id == "rdriv") {
+                    sortByDriver(resultsThing);
+                    resultsTable(resultsThing);
+                    document.querySelector("#rdriv").classList.toggle("sort");
+                } else if (e.target.id == "rconst") {
+                    sortByConstructor(resultsThing);
+                    resultsTable(resultsThing);
+                    document.querySelector("#rconst").classList.toggle("sort");
+                } else if (e.target.id == "laps") {
+                    sortByLaps(resultsThing);
+                    resultsTable(resultsThing);
+                    document.querySelector(`#laps`).classList.toggle("sort");
+                } else if (e.target.id == "points") {
+                    sortByPoints(resultsThing);
+                    resultsTable(resultsThing);
+                    document.querySelector(`#points`).classList.toggle("sort");
+                }
+                
+            }
+        })
     }
     function resultsTable(raceResults) {
         const row1 = document.querySelector("#resultTable tbody");
@@ -267,6 +296,26 @@ let circuitArray = [];
             
                 t.className = "";
             
+        })
+    }
+    function sortByLaps(data) {
+        data.sort((a,b) => {
+            if (a.laps < b.laps) {
+                return -1;
+            } else if (b.laps < a.laps) {
+                return 1;
+            }
+            return 0;
+        })
+    }
+    function sortByPoints(data) {
+        data.sort((a,b) => {
+            if (a.points < b.points) {
+                return -1;
+            } else if (b.points < a.points) {
+                return 1;
+            }
+            return 0;
         })
     }
     function sortByQualifier(data, id) {
