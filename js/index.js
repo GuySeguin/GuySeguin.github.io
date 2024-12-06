@@ -13,9 +13,9 @@ let circuitArray = [];
         let qualifyURL = "https://www.randyconnolly.com/funwebdev/3rd/api/f1/qualifying.php?season="
        
         let prom1 = fetch(raceURL+selectSeason).then(response => {if (response.ok) {return response.json()} else {throw new error("AAAAAAHHH!")}})
-        let prom2 = fetch(resultURL+selectSeason).then(response => {if (response.ok) {return response.json()} else {throw new error("AAAAAAHHH!")}})
-        let prom3 = fetch(qualifyURL+selectSeason).then(response => {if (response.ok) {return response.json()} else {throw new error("AAAAAAHHH!")}})
-        console.log(selectSeason);
+        let prom2 = fetch(resultURL+selectSeason).then(response => {if (response.ok) {return response.json()} else {throw new error("AAAAAAHHH!!")}})
+        let prom3 = fetch(qualifyURL+selectSeason).then(response => {if (response.ok) {return response.json()} else {throw new error("AAAAAAHHH!!!!")}})
+        
         return Promise.all([prom1, prom2, prom3]);
 
     }
@@ -117,7 +117,7 @@ let circuitArray = [];
                     return q;
                 }
             })
-            
+            printTop3(resultsInfo);
             resultsTable(resultsInfo);
            qualifyingTable(qualifyInfo);
            qualListeners(qualifyInfo);
@@ -222,6 +222,22 @@ let circuitArray = [];
                 
             }
         })
+    }
+    function printTop3(data) {
+        sortByPosition(data);
+        const div3 = document.querySelectorAll(".top3");
+        div3.forEach( d => {
+            d.innerHTML = null;
+        })
+        const first = document.createElement("h2");
+        const second = document.createElement("h2");
+        const third = document.createElement("h2");
+        first.textContent = `${data[0].driver.forename} ${data[0].driver.surname}`;
+        second.textContent =`${data[1].driver.forename} ${data[1].driver.surname}`;
+        third.textContent = `${data[2].driver.forename} ${data[2].driver.surname}`;
+        div3[0].appendChild(first);
+        div3[1].appendChild(second);
+        div3[2].appendChild(third);
     }
     function resultsTable(raceResults) {
         const row1 = document.querySelector("#resultTable tbody");
