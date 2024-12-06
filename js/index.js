@@ -22,19 +22,20 @@ let circuitArray = [];
     const select = document.querySelector("#home select");
     //Event listener for season select menu
     select.addEventListener("change", (e) => {
+        document.querySelector("#loading").showModal();
         selectSeason = e.target.value;
         document.querySelector("#home").style.display = "none";
         document.querySelector("#browse").style.display = "block";
-        const url = "https://www.randyconnolly.com/funwebdev/3rd/api/f1/races.php";
+       // const url = "https://www.randyconnolly.com/funwebdev/3rd/api/f1/races.php";
         
         let raceData = localStorage.getItem(`race${selectSeason}`);
         if (!raceData) {
             getSeasonData().then(data =>{
-                console.log(data)
+                
                 browseView(data[0]);
                 resultData = data[1];
                 qualifyData = data[2];
-                console.log(resultData)
+                
                 localStorage.setItem(`race${selectSeason}`, JSON.stringify(data[0]));
                 localStorage.setItem(`result${selectSeason}`, JSON.stringify(data[1]));
                 localStorage.setItem(`qualify${selectSeason}`, JSON.stringify(data[2]));
@@ -54,9 +55,10 @@ let circuitArray = [];
       // ).catch( error => {"AAAAAAAHHH!"});
    })
     function browseView(data) {
+        document.querySelector("#loading").close();
         console.log(resultData); 
         console.log(qualifyData);
-
+        console.log(data);
         data = sortByRound(data);
 
         raceTable(data);
@@ -428,6 +430,46 @@ let circuitArray = [];
     }
 
     })
+    const Constructor = class {
+        constructor(con) {
+            this.name = con.name;
+            this.id = con.id;
+            this.nationality = con.nationality;
+            this.ref = con.ref;
+    
+        }
+        //Finish this!!!!!!!!!!!!!!!!!
+        generateCard() {
+            const seasonRes = resultData.filter(r => {
+                if (r.driver.id == this.id) {
+                    return r;
+                }
+            })
+    
+        }
+       }
+    const Circuit = class {
+        constructor(cir) {
+            this.name = `${cir.forename} ${cir.surname}`;
+            this.id = cir.id;
+            this.country = cir.country;
+            this.ref = cir.ref;
+            this.url = cir.url;
+            this.location = cir.location;
+            this.lat = cir.lat;
+            this.lng = cir.lng;
+    
+        }
+        //Finish this!!!!!!!!!!!!!!!!!
+        generateCard() {
+            const seasonRes = resultData.filter(r => {
+                if (r.driver.id == this.id) {
+                    return r;
+                }
+            })
+    
+        }
+       }
    const Driver = class {
     constructor(driv) {
         this.name = `${driv.forename} ${driv.surname}`;
@@ -443,6 +485,7 @@ let circuitArray = [];
                 return r;
             }
         })
+
 
     }
    }
