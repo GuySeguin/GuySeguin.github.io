@@ -166,6 +166,7 @@ img[id="logo"] {
     color:var(--black);
     
     }
+    
 .footer-links {
     color: var(--lightblue);
 }
@@ -187,12 +188,9 @@ h1, h2, h3 {
 
   text-align: center;
 }
-
-::backdrop {
-  background-image: linear-gradient(
-    45deg,
-    rgb(36, 35, 35),
-  
-  );
-  opacity: 0.9;
+.dialButtons {
+  display: inline-flex;
+}
+.dialogDiv {
+  display: inline-flex;
 }

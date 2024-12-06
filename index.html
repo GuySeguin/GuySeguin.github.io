@@ -68,6 +68,7 @@
       <dialog id="loading">
         <p>LOADING! LOADING! LOADING!</p>
       </dialog>
+      <div id="dialogs">
       <dialog id="driver">
 
         <button>Favourite</button>
@@ -75,14 +76,21 @@
       </dialog>
       <dialog id="constructor">
 
-        <button>Favourite</button>
-        <button>Close</button>
+        <button >Favourite</button>
+        <button >Close</button>
       </dialog>
       <dialog id="circuit">
-
-        <button>Favourite</button>
-        <button>Close</button>
+        <h2>Circuit Details</h2>
+        <div class="dialogDiv">
+        <img src="https://placehold.co/300/grey/white?text=Circuit" alt="Placeholder" title="placeholder">
+        <div class="information"></div>
+      </div>
+      <div class="dialButtons">
+        <button data-circuitid="" class="fav">Favourite</button>
+        <button id="circuitClose">Close</button>
+      </div>
       </dialog>
+    </div>
       <section id="races"></section>
       
       <table id="raceTable">

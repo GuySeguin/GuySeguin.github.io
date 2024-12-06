@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
 let selectSeason;
 let resultData;
 let qualifyData;
+let raceyData;
 let driverArray = [];
 let constructorArray = [];
 let circuitArray = [];
@@ -31,8 +32,9 @@ let circuitArray = [];
         let raceData = localStorage.getItem(`race${selectSeason}`);
         if (!raceData) {
             getSeasonData().then(data =>{
-                
+               
                 browseView(data[0]);
+                raceyData = data[0];
                 resultData = data[1];
                 qualifyData = data[2];
                 
@@ -46,9 +48,10 @@ let circuitArray = [];
         } else {
             resultData = JSON.parse(localStorage.getItem(`result${selectSeason}`));
         qualifyData = JSON.parse(localStorage.getItem(`qualify${selectSeason}`));
-       
+            raceyData = JSON.parse(raceData)
             browseView(JSON.parse(raceData));
         }
+        dialListeners();
        
     //   fetch("https://randyconnolly.com/funwebdev/3rd/api/f1/drivers.php?id=1").then(response => {if (response.ok) {return response.json()} else {throw new error("AAAAAAHHH!")}}).then(
       //  data => {console.log(data)}
@@ -56,8 +59,7 @@ let circuitArray = [];
    })
     function browseView(data) {
         document.querySelector("#loading").close();
-        console.log(resultData); 
-        console.log(qualifyData);
+       
         console.log(data);
         data = sortByRound(data);
 
@@ -78,6 +80,8 @@ let circuitArray = [];
         td2.textContent = r.name;
     const td3 = document.createElement("td");
         td3.textContent = r.circuit.name;
+        td3.setAttribute("id", r.circuit.ref);
+            td3.classList.add("circuit");
         const td4 = document.createElement("td");
         td4.textContent = r.date;
         const td5 = document.createElement("td");
@@ -103,6 +107,18 @@ let circuitArray = [];
         
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
     function listeners(data) {
     document.querySelector("#raceTable").addEventListener("click", (e)=> {
         if (e.target.nodeName=="BUTTON") {
@@ -164,6 +180,30 @@ let circuitArray = [];
             }
             
 
+        } else if (e.target.nodeName == "TD" && e.target.classList.contains("circuit")) {
+            //Check CircuitArray if item already cached.
+            const cirquette = circuitArray.find(c => {
+                if (c.ref == e.target.id) {
+                    return c;
+                } else {
+                    return false;
+                }
+            })
+            //Creates object if item does not exist.
+            if (!cirquette) {
+            let circ;
+            for (let r of raceyData) {
+                console.log(e.target.id)
+                if (r.circuit.ref == e.target.id) {
+                    circ = r;
+                }
+            }
+            const circ2 = new Circuit(circ);
+            circuitArray.push(circ2);
+            displayCircuitDial(circ2.generateCard(), circ2);
+        } else {
+            displayCircuitDial(cirquette.generateCard(), cirquette);
+        }
         }
     })}
     function qualListeners(qualifyThin) {
@@ -225,6 +265,36 @@ let circuitArray = [];
             }
         })
     }
+    function dialListeners() {
+        document.querySelector("#circuitClose").addEventListener("click", (e) => {
+           document.querySelector("#circuit").close();
+        })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function displayCircuitDial(info, circ) {
+        document.querySelector(".information").innerHTML = null;
+        document.querySelector(".information").appendChild(info);
+        document.querySelector("#circuit .dialButtons .fav").setAttribute("data-circuitid", circ.id);
+        document.querySelector("#circuit").classList.add("dialog");
+        document.querySelector("#circuit").showModal();
+    }
     function printTop3(data) {
         sortByPosition(data);
         const div3 = document.querySelectorAll(".top3");
@@ -241,6 +311,17 @@ let circuitArray = [];
         div3[1].appendChild(second);
         div3[2].appendChild(third);
     }
+
+
+
+
+
+
+
+
+
+
+
     function resultsTable(raceResults) {
         const row1 = document.querySelector("#resultTable tbody");
        
@@ -258,6 +339,8 @@ let circuitArray = [];
 
             const td3 = document.createElement("td");
             td3.textContent = r.constructor.name;
+            td3.setAttribute("data-constructor", r.constructor.id);
+            td2.classList.add("constructor");
             const td4 = document.createElement("td");
             td4.textContent = r.laps;
             const td5 = document.createElement("td");
@@ -308,6 +391,17 @@ let circuitArray = [];
         }
 
     }
+
+
+
+
+
+
+
+
+
+
+
     function wipeClasses() {
         const th = document.querySelectorAll("th");
         th.forEach(t => {
@@ -430,6 +524,19 @@ let circuitArray = [];
     }
 
     })
+
+
+
+
+
+
+
+
+
+
+
+
+
     const Constructor = class {
         constructor(con) {
             this.name = con.name;
@@ -450,23 +557,30 @@ let circuitArray = [];
        }
     const Circuit = class {
         constructor(cir) {
-            this.name = `${cir.forename} ${cir.surname}`;
-            this.id = cir.id;
-            this.country = cir.country;
-            this.ref = cir.ref;
-            this.url = cir.url;
-            this.location = cir.location;
-            this.lat = cir.lat;
-            this.lng = cir.lng;
+            this.name = cir.circuit.name;
+            this.id = cir.circuit.id;
+            this.country = cir.circuit.country;
+            this.ref = cir.circuit.ref;
+            this.url = cir.circuit.url;
+            this.location = cir.circuit.location;
+            this.lat = cir.circuit.lat;
+            this.lng = cir.circuit.lng;
     
         }
         //Finish this!!!!!!!!!!!!!!!!!
         generateCard() {
-            const seasonRes = resultData.filter(r => {
-                if (r.driver.id == this.id) {
-                    return r;
-                }
-            })
+            const h3 = document.createElement("h3");
+            h3.textContent = this.name;
+            let place = `Location: ${this.location}, ${this.country}, at Latitude: ${this.lat} and Longitude: ${this.lng}`
+            const text = document.createTextNode(place);
+            const a = document.createElement("a");
+            a.setAttribute("href", this.url);
+            a.textContent = "Circuit Website";
+            const p = document.createElement("p");
+            p.appendChild(h3);
+            p.appendChild(text);
+            p.appendChild(a);
+           return p;
     
         }
        }
