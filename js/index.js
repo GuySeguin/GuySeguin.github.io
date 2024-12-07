@@ -1,13 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () { 
 
-let selectSeason;
-let resultData;
-let qualifyData;
-let raceyData;
-let driverArray = [];
-let constructorArray = [];
-let circuitArray = [];
-//Promise Method for fetches
+    //Function wide variables
+    let selectSeason;
+    let resultData;
+    let qualifyData;
+    let raceyData;
+    let driverArray = [];
+    let constructorArray = [];
+    let circuitArray = [];
+    let favCircuit = [];
+    let favDriver = [];
+    let favConstructor = [];
+
+    //Promise Method for fetches
     function getSeasonData() {
         let raceURL = "https://www.randyconnolly.com/funwebdev/3rd/api/f1/races.php?season="
         let resultURL = "https://www.randyconnolly.com/funwebdev/3rd/api/f1/results.php?season="
@@ -181,29 +186,7 @@ let circuitArray = [];
             
 
         } else if (e.target.nodeName == "TD" && e.target.classList.contains("circuit")) {
-            //Check CircuitArray if item already cached.
-            const cirquette = circuitArray.find(c => {
-                if (c.ref == e.target.id) {
-                    return c;
-                } else {
-                    return false;
-                }
-            })
-            //Creates object if item does not exist.
-            if (!cirquette) {
-            let circ;
-            for (let r of raceyData) {
-                console.log(e.target.id)
-                if (r.circuit.ref == e.target.id) {
-                    circ = r;
-                }
-            }
-            const circ2 = new Circuit(circ);
-            circuitArray.push(circ2);
-            displayCircuitDial(circ2.generateCard(), circ2);
-        } else {
-            displayCircuitDial(cirquette.generateCard(), cirquette);
-        }
+            circuitPopUp(e.target.id);
         }
     })}
     function qualListeners(qualifyThin) {
@@ -228,41 +211,69 @@ let circuitArray = [];
                     sortByQualifier(qualifyThin);
                     qualifyingTable(qualifyThin);
                     document.querySelector(`#${e.target.id}`).classList.toggle("sort");
-                }else if (e.target.nodeName == "TD" && e.target.classList.contains("circuit")) {
-            //Check CircuitArray if item already cached.
-            const cirquette = circuitArray.find(c => {
-                if (c.ref == e.target.id) {
-                    return c;
-                } else {
-                    return false;
                 }
-            })
-            //Creates object if item does not exist.
-            if (!cirquette) {
-            let circ;
-            for (let r of raceyData) {
-                console.log(e.target.id)
-                if (r.circuit.ref == e.target.id) {
-                    circ = r;
-                }
-            }
-            const circ2 = new Circuit(circ);
-            circuitArray.push(circ2);
-            displayCircuitDial(circ2.generateCard(), circ2);
-        } else {
-            displayCircuitDial(cirquette.generateCard(), cirquette);
-        }
-        }
-                
-            } else if (e.target.nodeName == "TD" && e.target.classList.contains("driver")) {
+        }   else if (e.target.nodeName == "TD" && e.target.classList.contains("driver")) {
+            
 
                driverPopUp(e.target.id);
             } else if (e.target.nodeName == "TD" && e.target.classList.contains("constructor")) {
-
+               
                 constructorPopUp(e.target.id);
              }
         })
 
+    }
+    function circuitPopUp(id) {
+        //Check CircuitArray if item already cached.
+        let cirquette;
+        for (let c of circuitArray) {
+            if (c.ref == id) {
+                cirquette = c;
+            }
+        }
+        //Creates object if item does not exist.
+        if (!cirquette) {
+        let circ;
+        for (let r of raceyData) {
+           
+            if (r.circuit.ref == id) {
+                circ = r;
+            }
+        }
+        const circ2 = new Circuit(circ);
+        circuitArray.push(circ2);
+        displayCircuitDial(circ2.generateCard(), circ2);
+    } else {
+        displayCircuitDial(cirquette.generateCard(), cirquette);
+    }
+    }
+    function constructorPopUp(id) {
+
+        let con;
+        
+        for (let c of constructorArray) {
+             if (c.ref == id) {
+                        con = c;
+            }
+        }
+        //Creates new Constructor object if item does not exist.
+        if (!con) {
+                
+            for (let r of resultData) {
+    
+                if (r.constructor.ref == id) {
+                        con = r;
+                }
+            }
+
+            const con2 = new Constructor(con);
+            constructorArray.push(con2);
+            displayConstructorDial(con2.generateCard(), con2);
+
+        } else {
+
+            displayConstructorDial(con.generateCard(), con);
+        }
     }
     function driverPopUp(id) {
         let driver;
@@ -270,14 +281,14 @@ let circuitArray = [];
         for (let d of driverArray) {
              if (d.ref == id) {
                         driver = d;
-                        console.log("array test");
+                     
             }
         }
         //Creates object if item does not exist.
         if (!driver) {
                 
             for (let r of resultData) {
-             console.log(id)
+             
                 if (r.driver.ref == id) {
                         driver = r;
                 }
@@ -292,33 +303,45 @@ let circuitArray = [];
     
     function resultListeners(resultsThing) {
         document.querySelector("#resultTable").addEventListener("click", (e) => {
+
             if (e.target && e.target.nodeName == "TH") {
                 sortByPosition(resultsThing);
                 wipeClasses();
                 document.querySelector("#resultTable tbody").innerHTML = null;
+
                 if (e.target.id == "rpos") {
                     sortByPosition(resultsThing);
                     resultsTable(resultsThing);
                     document.querySelector("#rpos").classList.toggle("sort");
+
                 } else if (e.target.id == "rdriv") {
                     sortByDriver(resultsThing);
                     resultsTable(resultsThing);
                     document.querySelector("#rdriv").classList.toggle("sort");
+
                 } else if (e.target.id == "rconst") {
                     sortByConstructor(resultsThing);
                     resultsTable(resultsThing);
                     document.querySelector("#rconst").classList.toggle("sort");
+
                 } else if (e.target.id == "laps") {
                     sortByLaps(resultsThing);
                     resultsTable(resultsThing);
                     document.querySelector(`#laps`).classList.toggle("sort");
+
                 } else if (e.target.id == "points") {
                     sortByPoints(resultsThing);
                     resultsTable(resultsThing);
                     document.querySelector(`#points`).classList.toggle("sort");
-                }
-                
-            }
+
+                } 
+            }  else if (e.target.nodeName == "TD" && e.target.classList.contains("driver")) {
+                driverPopUp(e.target.id);
+
+             } else if (e.target.nodeName == "TD" && e.target.classList.contains("constructor")) {
+                 constructorPopUp(e.target.id);
+              }
+            
         })
     }
     function dialListeners() {
@@ -332,14 +355,113 @@ let circuitArray = [];
             document.querySelector("#driver").close();
             
          })
-         //document.querySelector("#circuitClose").addEventListener("click", (e) => {
-            //document.querySelector("#circuit").close();
+         document.querySelector("#constructorClose").addEventListener("click", (e) => {
+            document.querySelector("#conresultTable tbody").innerHTML = null;
+            document.querySelector("#constructor").close();
             
-        // })
+         })
+         for (let i of document.querySelectorAll(".dialButtons .fav")) {
+            i.addEventListener("click", (e) => {
+                addFavourite(e.target.id);
+            })
+         }
     }
 
+    function addFavourite(ref) {
 
+        //Check if circuit, if so add to circuit faves.
+        let item;
+        
+        for (let t of circuitArray) {
+            if (t.ref == ref) {
+                item = t;
+            }
+        }
+        if (item) {
+            favCircuit.push(item);
+            updateFavourites();
+            return;
+        }
+        for (let t of driverArray) {
+            if (t.ref == ref) {
+                item = t;
+            }
+        }
+        if (item) {
+            favDriver.push(item);
+            updateFavourites();
+            return;
+        }
+        for (let t of constructorArray) {
+            if (t.ref == ref) {
+                item = t;
+            }
+        }
+        if (item) {
+            favConstructor.push(item);
+        }
+        updateFavourites();
+    }
+    function updateFavourites() {
+        
+        const driv = document.querySelector("#favDriver");
+        const con = document.querySelector("#favConstructor");
+        const cir = document.querySelector("#favCircuit");
+        driv.innerHTML = null;
+        con.innerHTML = null;
+        cir.innerHTML = null;
+       
+        driv.appendChild(document.createTextNode("Drivers: "))
+        con.appendChild(document.createTextNode("Constructors: "))
+        cir.appendChild( document.createTextNode("Circuits: "))
+        const ul1 = document.createElement("ul");
+        const ul2 = document.createElement("ul");
+        const ul3 = document.createElement("ul");
 
+       
+        favDriver.forEach(thingy => {
+           
+            const li = document.createElement("li");
+            li.setAttribute("id", thingy.ref);
+            li.classList.add("faveDriv")
+            li.textContent = thingy.name;
+            ul1.appendChild(li);
+          
+        })
+        favConstructor.forEach(thingy => {
+            const li = document.createElement("li");
+            li.setAttribute("id", thingy.ref);
+            li.textContent = thingy.name;
+            li.classList.add("faveCon")
+
+            ul2.appendChild(li);
+        })
+        favCircuit.forEach(thingy => {
+            const li = document.createElement("li");
+            li.setAttribute("id", thingy.ref);
+            li.textContent = thingy.name;
+            li.classList.add("faveCir")
+
+            ul3.appendChild(li);
+        })
+        driv.appendChild(ul1);
+        con.appendChild(ul2);
+        cir.appendChild(ul3);
+    }
+    //Event listener to trigger dialogs for favourites
+    document.querySelector("#favourites").addEventListener("click", (e) => {
+        if (e.target.nodeName == "LI") {
+            console.log(e.target);
+            if (e.target.classList.contains("faveDriv")) {
+                driverPopUp(e.target.id);
+            } else if (e.target.classList.contains("faveCon")) {
+                constructorPopUp(e.target.id);
+            } else if (e.target.classList.contains("faveCir")) {
+                circuitPopUp(e.target.id);
+            }
+
+        }
+    });
 
 
 
@@ -359,7 +481,7 @@ let circuitArray = [];
         document.querySelector(".cirinformation").innerHTML = null;
         document.querySelector(".cirinformation").appendChild(info);
         document.querySelector("#circuit .dialButtons .fav").setAttribute("id", circ.ref);
-        document.querySelector("#circuit").classList.add("dialog");
+     
         document.querySelector("#circuit").showModal();
     }
     function displayDriverDial(info, driv) {
@@ -372,10 +494,28 @@ let circuitArray = [];
         document.querySelector(".drinformation").innerHTML = null;
         document.querySelector(".drinformation").appendChild(info);
         document.querySelector("#driver .dialButtons .fav").setAttribute("id", driv.ref);
-        document.querySelector("#driver").classList.add("dialog");
+       
         dialResultsTable(resultsInfo, "#driver")
         document.querySelector("#driver").showModal();
     }
+    function displayConstructorDial(info, cons) {
+
+        const resultsInfo = resultData.filter(r => {
+            if (r.constructor.id == cons.id) {
+                return r;
+            }
+        })
+
+        document.querySelector(".coninformation").innerHTML = null;
+        document.querySelector(".coninformation").appendChild(info);
+        document.querySelector("#constructor .dialButtons .fav").setAttribute("id", cons.ref);
+    
+
+        dialResultsTable(resultsInfo, "#constructor")
+        document.querySelector("#constructor").showModal();
+    }
+
+
     function printTop3(data) {
         sortByPosition(data);
         const div3 = document.querySelectorAll(".top3");
@@ -447,7 +587,7 @@ let circuitArray = [];
             const td3 = document.createElement("td");
             td3.textContent = r.constructor.name;
             td3.setAttribute("id", r.constructor.ref);
-            td2.classList.add("constructor");
+            td3.classList.add("constructor");
             const td4 = document.createElement("td");
             td4.textContent = r.laps;
             const td5 = document.createElement("td");
@@ -481,7 +621,7 @@ let circuitArray = [];
             const ted3 = document.createElement("td");
             ted3.textContent = r.constructor.name;
             ted3.setAttribute("id", r.constructor.ref);
-            ted2.classList.add("constructor");
+            ted3.classList.add("constructor");
             const ted4 = document.createElement("td");
             ted4.textContent = r.q1;
             const ted5 = document.createElement("td");
@@ -648,20 +788,24 @@ let circuitArray = [];
 
     const Constructor = class {
         constructor(con) {
-            this.name = con.name;
-            this.id = con.id;
-            this.nationality = con.nationality;
-            this.ref = con.ref;
+            this.name = con.constructor.name;
+            this.id = con.constructor.id;
+            this.nationality = con.constructor.nationality;
+            this.ref = con.constructor.ref;
     
         }
-        //Finish this!!!!!!!!!!!!!!!!!
+       
         generateCard() {
-            const seasonRes = resultData.filter(r => {
-                if (r.driver.id == this.id) {
-                    return r;
-                }
-            })
-    
+             
+            const h3 = document.createElement("h3");
+            h3.textContent = this.name;
+            
+            const text = document.createTextNode(`Nationality: ${this.nationality}`);
+            const p = document.createElement("p");
+            p.appendChild(h3);
+            p.appendChild(text);
+           
+           return p;
         }
        }
     const Circuit = class {
@@ -676,7 +820,7 @@ let circuitArray = [];
             this.lng = cir.circuit.lng;
     
         }
-        //Finish this!!!!!!!!!!!!!!!!!
+        
         generateCard() {
             const h3 = document.createElement("h3");
             h3.textContent = this.name;
@@ -702,7 +846,7 @@ let circuitArray = [];
         this.ref = driv.driver.ref;
 
     }
-    //Finish this!!!!!!!!!!!!!!!!!
+
     generateCard() {
         const h3 = document.createElement("h3");
             h3.textContent = this.name;

@@ -65,6 +65,7 @@
       </div>
     </article>
     <article id="browse">
+      
       <dialog id="loading">
         <p>LOADING! LOADING! LOADING!</p>
       </dialog>
@@ -83,15 +84,32 @@
        </table></div>
       </div>
       <div class="dialButtons">
-        <button data-circuitid="" class="fav">Favourite</button>
+        <button class="fav">Favourite</button>
         <button id="driverClose">Close</button>
       </div>
       </dialog>
-      <dialog id="constructor">
 
-        <button >Favourite</button>
-        <button >Close</button>
+
+
+      <dialog id="constructor">
+        <h2>Constructor Details</h2>
+        <div class="dialogDiv">
+          
+          <div class="coninformation"></div>
+
+      <div class="dialTable"  id="conTable"> <table id="conresultTable">
+        <caption>Race Results</caption>
+      <thead><tr><th>Position</th><th>Driver</th><th>Constructor</th><th>Laps</th><th>Points</th></tr></thead>
+      <tbody></tbody>
+       </table></div>
+      </div>
+      <div class="dialButtons">
+        <button class="fav">Favourite</button>
+        <button id="constructorClose">Close</button>
+      </div>
       </dialog>
+
+
       <dialog id="circuit">
         <h2>Circuit Details</h2>
         <div class="dialogDiv">
@@ -99,13 +117,15 @@
         <div class="cirinformation"></div>
       </div>
       <div class="dialButtons">
-        <button data-circuitid="" class="fav">Favourite</button>
+        <button class="fav">Favourite</button>
         <button id="circuitClose">Close</button>
       </div>
       </dialog>
+
+
     </div>
-      <section id="races"></section>
       
+      <section>
       <table id="raceTable">
        <caption>Please Select a Race:</caption>
        <thead><tr><th id="raceid">Race ID</th><th id="rName">Race Name</th><th id="rCircuit">Circuit</th><th id="rDate">Date</th><th id="rRound">Round</th><th>URL</th></tr></thead>
@@ -131,6 +151,9 @@
           </section>
         </div>
       </section>
+    </section>
+    <aside id="favourites"><h3>Favourites:</h3>
+    <p id="favDriver">Drivers:</p><p id="favConstructor">Constructors:</p><p id="favCircuit">Circuit:</p></aside>
     </article>
 
 
