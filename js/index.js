@@ -228,12 +228,68 @@ let circuitArray = [];
                     sortByQualifier(qualifyThin);
                     qualifyingTable(qualifyThin);
                     document.querySelector(`#${e.target.id}`).classList.toggle("sort");
+                }else if (e.target.nodeName == "TD" && e.target.classList.contains("circuit")) {
+            //Check CircuitArray if item already cached.
+            const cirquette = circuitArray.find(c => {
+                if (c.ref == e.target.id) {
+                    return c;
+                } else {
+                    return false;
                 }
-                
+            })
+            //Creates object if item does not exist.
+            if (!cirquette) {
+            let circ;
+            for (let r of raceyData) {
+                console.log(e.target.id)
+                if (r.circuit.ref == e.target.id) {
+                    circ = r;
+                }
             }
+            const circ2 = new Circuit(circ);
+            circuitArray.push(circ2);
+            displayCircuitDial(circ2.generateCard(), circ2);
+        } else {
+            displayCircuitDial(cirquette.generateCard(), cirquette);
+        }
+        }
+                
+            } else if (e.target.nodeName == "TD" && e.target.classList.contains("driver")) {
+
+               driverPopUp(e.target.id);
+            } else if (e.target.nodeName == "TD" && e.target.classList.contains("constructor")) {
+
+                constructorPopUp(e.target.id);
+             }
         })
 
     }
+    function driverPopUp(id) {
+        let driver;
+        
+        for (let d of driverArray) {
+             if (d.ref == id) {
+                        driver = d;
+                        console.log("array test");
+            }
+        }
+        //Creates object if item does not exist.
+        if (!driver) {
+                
+            for (let r of resultData) {
+             console.log(id)
+                if (r.driver.ref == id) {
+                        driver = r;
+                }
+            }
+            const driver2 = new Driver(driver);
+            driverArray.push(driver2);
+            displayDriverDial(driver2.generateCard(), driver2);
+        } else {
+            displayDriverDial(driver.generateCard(), driver);
+        }
+    }
+    
     function resultListeners(resultsThing) {
         document.querySelector("#resultTable").addEventListener("click", (e) => {
             if (e.target && e.target.nodeName == "TH") {
@@ -268,7 +324,18 @@ let circuitArray = [];
     function dialListeners() {
         document.querySelector("#circuitClose").addEventListener("click", (e) => {
            document.querySelector("#circuit").close();
+           
         })
+
+        document.querySelector("#driverClose").addEventListener("click", (e) => {
+            document.querySelector("#dresultTable tbody").innerHTML = null;
+            document.querySelector("#driver").close();
+            
+         })
+         //document.querySelector("#circuitClose").addEventListener("click", (e) => {
+            //document.querySelector("#circuit").close();
+            
+        // })
     }
 
 
@@ -289,11 +356,25 @@ let circuitArray = [];
 
 
     function displayCircuitDial(info, circ) {
-        document.querySelector(".information").innerHTML = null;
-        document.querySelector(".information").appendChild(info);
-        document.querySelector("#circuit .dialButtons .fav").setAttribute("data-circuitid", circ.id);
+        document.querySelector(".cirinformation").innerHTML = null;
+        document.querySelector(".cirinformation").appendChild(info);
+        document.querySelector("#circuit .dialButtons .fav").setAttribute("id", circ.ref);
         document.querySelector("#circuit").classList.add("dialog");
         document.querySelector("#circuit").showModal();
+    }
+    function displayDriverDial(info, driv) {
+        const resultsInfo = resultData.filter(r => {
+            if (r.driver.id == driv.id) {
+                return r;
+            }
+        })
+
+        document.querySelector(".drinformation").innerHTML = null;
+        document.querySelector(".drinformation").appendChild(info);
+        document.querySelector("#driver .dialButtons .fav").setAttribute("id", driv.ref);
+        document.querySelector("#driver").classList.add("dialog");
+        dialResultsTable(resultsInfo, "#driver")
+        document.querySelector("#driver").showModal();
     }
     function printTop3(data) {
         sortByPosition(data);
@@ -318,7 +399,33 @@ let circuitArray = [];
 
 
 
+    function dialResultsTable(results, tableid) {
+        const row1 = document.querySelector(`${tableid} tbody`);
+       
+        for (let r of results) {
 
+            const nuTr = document.createElement("tr");
+           
+            const td1 = document.createElement("td");
+            td1.textContent = r.position;
+            const td2 = document.createElement("td");
+            td2.textContent = `${r.driver.forename} ${r.driver.surname}`;
+            const td3 = document.createElement("td");
+            td3.textContent = r.constructor.name;
+            const td4 = document.createElement("td");
+            td4.textContent = r.laps;
+            const td5 = document.createElement("td");
+            td5.textContent = r.points;
+   
+            nuTr.appendChild(td1);
+            nuTr.appendChild(td2);
+            nuTr.appendChild(td3);
+            nuTr.appendChild(td4);
+            nuTr.appendChild(td5);
+       
+            row1.appendChild(nuTr);
+        }
+    }
 
 
 
@@ -334,12 +441,12 @@ let circuitArray = [];
             td1.textContent = r.position;
             const td2 = document.createElement("td");
             td2.textContent = `${r.driver.forename} ${r.driver.surname}`;
-            td2.setAttribute("data-driver", r.driver.id);
+            td2.setAttribute("id", r.driver.ref);
             td2.classList.add("driver");
 
             const td3 = document.createElement("td");
             td3.textContent = r.constructor.name;
-            td3.setAttribute("data-constructor", r.constructor.id);
+            td3.setAttribute("id", r.constructor.ref);
             td2.classList.add("constructor");
             const td4 = document.createElement("td");
             td4.textContent = r.laps;
@@ -368,11 +475,13 @@ let circuitArray = [];
             ted1.textContent = r.position;
             const ted2 = document.createElement("td");
             ted2.textContent = `${r.driver.forename} ${r.driver.surname}`;
-            ted2.setAttribute("data-driver", r.driver.id);
+            ted2.setAttribute("id", r.driver.ref);
             ted2.classList.add("driver");
 
             const ted3 = document.createElement("td");
             ted3.textContent = r.constructor.name;
+            ted3.setAttribute("id", r.constructor.ref);
+            ted2.classList.add("constructor");
             const ted4 = document.createElement("td");
             ted4.textContent = r.q1;
             const ted5 = document.createElement("td");
@@ -579,6 +688,7 @@ let circuitArray = [];
             const p = document.createElement("p");
             p.appendChild(h3);
             p.appendChild(text);
+            p.appendChild(document.createElement("br"));
             p.appendChild(a);
            return p;
     
@@ -586,20 +696,23 @@ let circuitArray = [];
        }
    const Driver = class {
     constructor(driv) {
-        this.name = `${driv.forename} ${driv.surname}`;
-        this.id = driv.id;
-        this.nationality = driv.nationality;
-        this.ref = driv.ref;
+        this.name = `${driv.driver.forename} ${driv.driver.surname}`;
+        this.id = driv.driver.id;
+        this.nationality = driv.driver.nationality;
+        this.ref = driv.driver.ref;
 
     }
     //Finish this!!!!!!!!!!!!!!!!!
     generateCard() {
-        const seasonRes = resultData.filter(r => {
-            if (r.driver.id == this.id) {
-                return r;
-            }
-        })
-
+        const h3 = document.createElement("h3");
+            h3.textContent = this.name;
+            
+            const text = document.createTextNode(`Nationality: ${this.nationality}`);
+            const p = document.createElement("p");
+            p.appendChild(h3);
+            p.appendChild(text);
+           
+           return p;
 
     }
    }

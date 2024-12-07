@@ -70,9 +70,22 @@
       </dialog>
       <div id="dialogs">
       <dialog id="driver">
-
-        <button>Favourite</button>
-        <button>Close</button>
+        <h2>Driver Details</h2>
+        <div class="dialogDiv">
+          <div>
+          <div class="drinformation"></div>
+        <img src="https://placehold.co/300/grey/white?text=Driver" alt="Placeholder" title="placeholder">
+      </div>
+      <div class="dialTable"  id="dTable"> <table id="dresultTable">
+        <caption>Race Results</caption>
+      <thead><tr><th>Position</th><th>Driver</th><th>Constructor</th><th>Laps</th><th>Points</th></tr></thead>
+      <tbody></tbody>
+       </table></div>
+      </div>
+      <div class="dialButtons">
+        <button data-circuitid="" class="fav">Favourite</button>
+        <button id="driverClose">Close</button>
+      </div>
       </dialog>
       <dialog id="constructor">
 
@@ -83,7 +96,7 @@
         <h2>Circuit Details</h2>
         <div class="dialogDiv">
         <img src="https://placehold.co/300/grey/white?text=Circuit" alt="Placeholder" title="placeholder">
-        <div class="information"></div>
+        <div class="cirinformation"></div>
       </div>
       <div class="dialButtons">
         <button data-circuitid="" class="fav">Favourite</button>

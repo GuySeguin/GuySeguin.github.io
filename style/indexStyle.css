@@ -198,3 +198,7 @@ h1, h2, h3 {
 .dialogDiv {
   display: inline-flex;
 }
+.dialTable {
+  max-height: 400px;
+  overflow: scroll;
+}
