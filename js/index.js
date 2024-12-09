@@ -31,7 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector("#loading").showModal();
         selectSeason = e.target.value;
         document.querySelector("#home").style.display = "none";
-        document.querySelector("#browse").style.display = "block";
+        document.querySelector("#browse").style.display = "inline";
+        
+
        // const url = "https://www.randyconnolly.com/funwebdev/3rd/api/f1/races.php";
         
         let raceData = localStorage.getItem(`race${selectSeason}`);
@@ -103,9 +105,11 @@ document.addEventListener('DOMContentLoaded', function () {
         nuTr.appendChild(td4);
         nuTr.appendChild(td5);
         nuTr.appendChild(td6);
-        const td7 = document.createElement("button");
-        td7.setAttribute("id", r.id);
-        td7.textContent = "Results";
+        const td7 = document.createElement("td");
+        const td8 = document.createElement("button");
+        td8.setAttribute("id", r.id);
+        td8.textContent = "Results";
+        td7.appendChild(td8);
         nuTr.appendChild(td7);
         row1.appendChild(nuTr);
         }
@@ -128,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector("#raceTable").addEventListener("click", (e)=> {
         if (e.target.nodeName=="BUTTON") {
             document.querySelector("#resultTable tbody").innerHTML = null;
-            document.querySelector("#raceResults").style.display = "block";
+            document.querySelector("#raceResults").style.display = "inline-flex";
             document.querySelector("#qualifyingTable tbody").innerHTML = null;
             const resultsInfo = resultData.filter(r => {
                 if (r.race.id == e.target.id) {
@@ -367,6 +371,32 @@ document.addEventListener('DOMContentLoaded', function () {
          }
     }
 
+    function removeFavourite(ref) {
+         //Looping through the three arrays to check where to remove from.
+         let item;
+        
+         for (let i = 0; i < favCircuit.length; i++) {
+            if (favCircuit[i].ref == ref) {
+                favCircuit[i].favourited = false;
+                favCircuit.splice(i, 1);
+                
+            }
+         }
+         for (let i = 0; i < favDriver.length; i++) {
+            if (favDriver[i].ref == ref) {
+                favDriver[i].favourited = false;
+                favDriver.splice(i, 1);
+            }
+         }
+         for (let i = 0; i < favConstructor.length; i++) {
+            if (favConstructor[i].ref == ref) {
+                favConstructor[i].favourited = false;
+                favConstructor.splice(i, 1);
+            }
+         }
+        
+         updateFavourites();
+    }
     function addFavourite(ref) {
 
         //Check if circuit, if so add to circuit faves.
@@ -377,7 +407,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 item = t;
             }
         }
-        if (item) {
+        if (item && !item.favourited) {
+            item.favourited = true;
             favCircuit.push(item);
             updateFavourites();
             return;
@@ -387,7 +418,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 item = t;
             }
         }
-        if (item) {
+        if (item && !item.favourited) {
+            item.favourited = true;
             favDriver.push(item);
             updateFavourites();
             return;
@@ -397,7 +429,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 item = t;
             }
         }
-        if (item) {
+        if (item && !item.favourited) {
+            item.favourited = true;
             favConstructor.push(item);
         }
         updateFavourites();
@@ -424,14 +457,24 @@ document.addEventListener('DOMContentLoaded', function () {
             const li = document.createElement("li");
             li.setAttribute("id", thingy.ref);
             li.classList.add("faveDriv")
-            li.textContent = thingy.name;
+            li.appendChild(document.createTextNode(thingy.name));
+           // li.textContent = thingy.name;
+            const button = document.createElement("button");
+            button.setAttribute("value", thingy.ref);
+            button.textContent = "x";
+            li.appendChild(button);
             ul1.appendChild(li);
           
         })
         favConstructor.forEach(thingy => {
             const li = document.createElement("li");
             li.setAttribute("id", thingy.ref);
-            li.textContent = thingy.name;
+            li.appendChild(document.createTextNode(thingy.name));
+           // li.textContent = thingy.name;
+            const button = document.createElement("button");
+            button.textContent = "x";
+            button.setAttribute("value", thingy.ref);
+            li.appendChild(button);
             li.classList.add("faveCon")
 
             ul2.appendChild(li);
@@ -439,7 +482,12 @@ document.addEventListener('DOMContentLoaded', function () {
         favCircuit.forEach(thingy => {
             const li = document.createElement("li");
             li.setAttribute("id", thingy.ref);
-            li.textContent = thingy.name;
+            li.appendChild(document.createTextNode(thingy.name));
+            // li.textContent = thingy.name;
+             const button = document.createElement("button");
+             button.textContent = "x";
+             button.setAttribute("value", thingy.ref);
+             li.appendChild(button);
             li.classList.add("faveCir")
 
             ul3.appendChild(li);
@@ -458,10 +506,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 constructorPopUp(e.target.id);
             } else if (e.target.classList.contains("faveCir")) {
                 circuitPopUp(e.target.id);
-            }
+            } 
 
+
+        } else if (e.target.nodeName == "BUTTON") {
+               
+            removeFavourite(e.target.value);
         }
     });
+    
 
 
 
@@ -522,9 +575,9 @@ document.addEventListener('DOMContentLoaded', function () {
         div3.forEach( d => {
             d.innerHTML = null;
         })
-        const first = document.createElement("h2");
-        const second = document.createElement("h2");
-        const third = document.createElement("h2");
+        const first = document.createElement("h3");
+        const second = document.createElement("h3");
+        const third = document.createElement("h3");
         first.textContent = `${data[0].driver.forename} ${data[0].driver.surname}`;
         second.textContent =`${data[1].driver.forename} ${data[1].driver.surname}`;
         third.textContent = `${data[2].driver.forename} ${data[2].driver.surname}`;
@@ -541,7 +594,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function dialResultsTable(results, tableid) {
         const row1 = document.querySelector(`${tableid} tbody`);
-       
+       console.log(results)
         for (let r of results) {
 
             const nuTr = document.createElement("tr");
@@ -792,6 +845,8 @@ document.addEventListener('DOMContentLoaded', function () {
             this.id = con.constructor.id;
             this.nationality = con.constructor.nationality;
             this.ref = con.constructor.ref;
+            this.favourited = false;
+
     
         }
        
@@ -818,6 +873,8 @@ document.addEventListener('DOMContentLoaded', function () {
             this.location = cir.circuit.location;
             this.lat = cir.circuit.lat;
             this.lng = cir.circuit.lng;
+            this.favourited = false;
+
     
         }
         
@@ -844,6 +901,7 @@ document.addEventListener('DOMContentLoaded', function () {
         this.id = driv.driver.id;
         this.nationality = driv.driver.nationality;
         this.ref = driv.driver.ref;
+        this.favourited = false;
 
     }
 
