@@ -22,7 +22,7 @@
     --darkBlue: #2b66b4;
     --darkerBlue: rgb(27, 34, 78);
     --darkpurple: rgb(45, 21, 83);
-    --lightblue: rgb(0, 255, 255);
+    --lightblue: rgb(229, 198, 247);
     --black: rgb(0, 0, 0);
 
   }
@@ -183,13 +183,26 @@ aside ul li {
   text-decoration: underline;
   
 }
+td:nth-child(odd) {
+  background-color: var(--lightblue);
+}
+.circuit, .driver, .constructor {
+  font-weight: bold;
+}
 aside ul li button {
   margin-left: 10px;
   
 }
-h1, h2, h3 {
-
-  text-align: center;
+#raceItem {
+  background-color: var(--darkBlue);
+}
+#raceItem div {
+  background-color: var(--blue);
+  display: flex;
+  justify-content: center;
+}
+#raceItem div a {
+  text-decoration: underline;
 }
 .dialButtons {
   display: inline-flex;

@@ -134,6 +134,13 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector("#resultTable tbody").innerHTML = null;
             document.querySelector("#raceResults").style.display = "inline-flex";
             document.querySelector("#qualifyingTable tbody").innerHTML = null;
+
+            const raceItem = raceyData.find( r => {
+                if (r.id == e.target.id) {
+                    return r;
+                }
+            })
+            
             const resultsInfo = resultData.filter(r => {
                 if (r.race.id == e.target.id) {
                     return r;
@@ -144,11 +151,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     return q;
                 }
             })
+            printRaceInfo(raceItem);
             printTop3(resultsInfo);
             resultsTable(resultsInfo);
            qualifyingTable(qualifyInfo);
            qualListeners(qualifyInfo);
            resultListeners(resultsInfo);
+
         } else if (e.target.nodeName=="TH") {
             wipeClasses();
             if (e.target.id=="raceid") {
@@ -529,7 +538,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+    function  printRaceInfo(raceItem) {
+        document.querySelector("#raceItem h3").textContent = `Results for ${raceItem.name}`
+        const div = document.querySelector("#raceItem");
 
+        const p = document.querySelector("#raceItem div");
+        p.innerHTML = null;
+        p.textContent = `Round: ${raceItem.round} Year: ${raceItem.year} Circuit: ${raceItem.circuit.name} Date: ${raceItem.date} Website: `
+        const a = document.createElement("a");
+        a.textContent = " Race Website";
+        p.appendChild(a);
+        div.appendChild(p);
+    }
     function displayCircuitDial(info, circ) {
         document.querySelector(".cirinformation").innerHTML = null;
         document.querySelector(".cirinformation").appendChild(info);
@@ -570,6 +590,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     function printTop3(data) {
+        
         sortByPosition(data);
         const div3 = document.querySelectorAll(".top3");
         div3.forEach( d => {
