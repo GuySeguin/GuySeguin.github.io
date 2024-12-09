@@ -170,7 +170,7 @@ a:focus {
 }
 dialog a:focus {
   box-shadow: none;
-  background-color: white;
+  background-color: var(--white);
   color:var(--darkpurple);
  
 }
@@ -196,6 +196,25 @@ h1, h2, h3 {
 }
 .dialogDiv {
   display: inline-flex;
+}
+dialog h2 {
+  background-color: var(--blue);
+  border: 1px solid var(--darkpurple);
+  border-radius: 5px;
+}
+dialog div {
+  padding: 10px;
+  background-color: white;
+  border: 1px solid var(--darkpurple);
+}
+#ignore {
+  border: none;
+}
+caption {
+  font-weight: bold;
+}
+dialog {
+  background-color: var(--white);
 }
 .dialTable {
   max-height: 400px;

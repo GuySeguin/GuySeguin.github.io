@@ -594,27 +594,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function dialResultsTable(results, tableid) {
         const row1 = document.querySelector(`${tableid} tbody`);
-       console.log(results)
+       console.log(tableid)
         for (let r of results) {
 
             const nuTr = document.createElement("tr");
-           
-            const td1 = document.createElement("td");
-            td1.textContent = r.position;
-            const td2 = document.createElement("td");
-            td2.textContent = `${r.driver.forename} ${r.driver.surname}`;
+           const td1 = document.createElement("td");
+           td1.textContent = r.race.round
+           const td2 = document.createElement("td");
+           td2.textContent = r.race.name
             const td3 = document.createElement("td");
-            td3.textContent = r.constructor.name;
+            td3.textContent = r.position;
             const td4 = document.createElement("td");
-            td4.textContent = r.laps;
+            //Check if Driver or Constructor table to print correct 4th column
+            if (tableid == "#constructor") {
+            td4.textContent = `${r.driver.forename} ${r.driver.surname}`;
+            } else {
+                td4.textContent = r.constructor.name;
+            }
+            
             const td5 = document.createElement("td");
-            td5.textContent = r.points;
+            td5.textContent = r.laps;
+            const td6 = document.createElement("td");
+            td6.textContent = r.points;
    
             nuTr.appendChild(td1);
             nuTr.appendChild(td2);
             nuTr.appendChild(td3);
             nuTr.appendChild(td4);
             nuTr.appendChild(td5);
+            nuTr.appendChild(td6);
        
             row1.appendChild(nuTr);
         }
