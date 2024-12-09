@@ -22,12 +22,9 @@
   <body>
     
     <header >
-     
+      <img src="images/logo.png" alt="logo" title="logo" id="logo" width="150px" height="50px">
         <nav>
-          
-         
           <a class="navLink" href="index.html">Return to Home</a>
-          
 
         </nav>
     </header>
@@ -46,6 +43,7 @@
         <p>
           
           Assignment #2 in Web 3512 at Mount Royal University <br>
+          Single Page Application for viewing Formula One Results, powered by Javascript<br>
           Made by: Guy Seguin <br>
           Technologies Used:
           <ul><li>Javascript</li><li>HTML</li><li>CSS</li></ul>
@@ -54,6 +52,7 @@
           Hosting provided by Github pages at <a href="https://guyseguin.github.io/">guyseguin.github.io</a>
           <br> Repository can be found at: <a href="https://github.com/GuySeguin/GuySeguin.github.io">github.com/GuySeguin/GuySeguin.github.io</a>
         </p>
+        <p>Please Select a Race Season to Begin</p>
         <label for="seasons">Season Selection:</label>
         <select id="year" name="seasons" >
           <option value="0" disabled selected>Please Select a Season</option>
@@ -67,7 +66,7 @@
     <article id="browse">
       
       <dialog id="loading">
-        <p>LOADING! LOADING! LOADING!</p>
+        <p>One moment please while we load your content.</p>
       </dialog>
       <div id="dialogs">
       <dialog id="driver">
@@ -95,8 +94,11 @@
         <h2>Constructor Details</h2>
         <div class="dialogDiv">
           
-          <div class="coninformation"></div>
-
+          <div id="ignore">
+            <div class="coninformation"></div>
+          <img src="https://placehold.co/300/grey/white?text=Constructor" alt="Placeholder" title="placeholder">
+        </div>
+          
       <div class="dialTable"  id="conTable"> <table id="conresultTable">
         <caption>Race Results</caption>
       <thead><tr><th>Round</th><th>Race Name</th><th>Position</th><th>Driver</th><th>Laps</th><th>Points</th></tr></thead>
@@ -120,6 +122,7 @@
         <button class="fav">Favourite</button>
         <button id="circuitClose">Close</button>
       </div>
+      
       </dialog>
 
 
@@ -130,7 +133,7 @@
         <div id="raceStuff">
         
       <table id="raceTable">
-       <caption>Please Select a Race:</caption>
+       <caption>Please Select a Race (Results will be displayed below):</caption>
        <thead><tr><th id="raceid">Race ID</th><th id="rName">Race Name</th><th id="rCircuit">Circuit</th><th id="rDate">Date</th><th id="rRound">Round</th><th>URL</th></tr></thead>
       <tbody></tbody>
       </table>
@@ -150,7 +153,11 @@
         </div>
         </section>
         <div id="res">
-          <div class="top3" id="first"></div><div class="top3" id="second"></div><div class="top3"v id="third"></div>
+          <div class="top3" id="first"><img src="images/position1.png" alt="first Position" width="100" height="100"><div class="centre"></div></div>
+          <div class="top3" id="second"><img src="images/position2.png" alt="second Position" width="100" height="100"><div class="centre">
+
+          </div></div><div class="top3" id="third"><img src="images/position3.png" alt="third Position" width="100" height="100"><div class="centre"></div></div>
+
         <div id="result">
           <table id="resultTable">
             <caption>Race Results</caption>

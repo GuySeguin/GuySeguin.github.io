@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let favCircuit = [];
     let favDriver = [];
     let favConstructor = [];
+    let currentRace;
 
     //Promise Method for fetches
     function getSeasonData() {
@@ -33,8 +34,22 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector("#home").style.display = "none";
         document.querySelector("#browse").style.display = "inline";
         
+        //Fetching Favourites from storage if present.
+        if (JSON.parse(localStorage.getItem("favCircuit"))) {
+        favCircuit = JSON.parse(localStorage.getItem("favCircuit"));
+        
+        }
 
-       // const url = "https://www.randyconnolly.com/funwebdev/3rd/api/f1/races.php";
+        if (JSON.parse(localStorage.getItem("favConstructor"))) {
+        favConstructor = JSON.parse(localStorage.getItem("favConstructor"));
+        
+        }
+
+        if (JSON.parse(localStorage.getItem("favDriver"))) {
+        favDriver = JSON.parse(localStorage.getItem("favDriver"));
+        
+        }
+        updateFavourites();
         
         let raceData = localStorage.getItem(`race${selectSeason}`);
         if (!raceData) {
@@ -60,14 +75,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         dialListeners();
        
-    //   fetch("https://randyconnolly.com/funwebdev/3rd/api/f1/drivers.php?id=1").then(response => {if (response.ok) {return response.json()} else {throw new error("AAAAAAHHH!")}}).then(
-      //  data => {console.log(data)}
-      // ).catch( error => {"AAAAAAAHHH!"});
+    
    })
     function browseView(data) {
         document.querySelector("#loading").close();
        
-        console.log(data);
+    
         data = sortByRound(data);
 
         raceTable(data);
@@ -86,7 +99,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const td2 = document.createElement("td");
         td2.textContent = r.name;
     const td3 = document.createElement("td");
+   
+    if (favCircuit.find( res => res.ref == r.circuit.ref)) {
+        td3.textContent = r.circuit.name + " " + String.fromCodePoint("0x2764");
+    } else {
         td3.textContent = r.circuit.name;
+    }
         td3.setAttribute("id", r.circuit.ref);
             td3.classList.add("circuit");
         const td4 = document.createElement("td");
@@ -134,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector("#resultTable tbody").innerHTML = null;
             document.querySelector("#raceResults").style.display = "inline-flex";
             document.querySelector("#qualifyingTable tbody").innerHTML = null;
-
+            currentRace = e.target.id;
             const raceItem = raceyData.find( r => {
                 if (r.id == e.target.id) {
                     return r;
@@ -155,9 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
             printTop3(resultsInfo);
             resultsTable(resultsInfo);
            qualifyingTable(qualifyInfo);
-           qualListeners(qualifyInfo);
-           resultListeners(resultsInfo);
-
+           
         } else if (e.target.nodeName=="TH") {
             wipeClasses();
             if (e.target.id=="raceid") {
@@ -202,8 +218,14 @@ document.addEventListener('DOMContentLoaded', function () {
             circuitPopUp(e.target.id);
         }
     })}
-    function qualListeners(qualifyThin) {
+    
+    //Event handler for qualify table
         document.querySelector("#qualifyingTable").addEventListener("click", (e) => {
+            const qualifyThin = qualifyData.filter(q => {
+                if (q.race.id == currentRace) {
+                    return q;
+                }
+            })
             if (e.target && e.target.nodeName == "TH") {
                 sortByPosition(qualifyThin);
                 wipeClasses();
@@ -227,7 +249,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
         }   else if (e.target.nodeName == "TD" && e.target.classList.contains("driver")) {
             
-
                driverPopUp(e.target.id);
             } else if (e.target.nodeName == "TD" && e.target.classList.contains("constructor")) {
                
@@ -235,7 +256,7 @@ document.addEventListener('DOMContentLoaded', function () {
              }
         })
 
-    }
+    
     function circuitPopUp(id) {
         //Check CircuitArray if item already cached.
         let cirquette;
@@ -312,11 +333,16 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             displayDriverDial(driver.generateCard(), driver);
         }
+       
     }
     
-    function resultListeners(resultsThing) {
+    
         document.querySelector("#resultTable").addEventListener("click", (e) => {
-
+            const resultsThing = resultData.filter(r => {
+                if (r.race.id == currentRace) {
+                    return r;
+                }
+            })
             if (e.target && e.target.nodeName == "TH") {
                 sortByPosition(resultsThing);
                 wipeClasses();
@@ -350,13 +376,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 } 
             }  else if (e.target.nodeName == "TD" && e.target.classList.contains("driver")) {
                 driverPopUp(e.target.id);
+               
 
              } else if (e.target.nodeName == "TD" && e.target.classList.contains("constructor")) {
                  constructorPopUp(e.target.id);
+                 
               }
             
         })
-    }
+    
     function dialListeners() {
         document.querySelector("#circuitClose").addEventListener("click", (e) => {
            document.querySelector("#circuit").close();
@@ -375,9 +403,12 @@ document.addEventListener('DOMContentLoaded', function () {
          })
          for (let i of document.querySelectorAll(".dialButtons .fav")) {
             i.addEventListener("click", (e) => {
+                e.target.blur();
                 addFavourite(e.target.id);
+               
             })
          }
+         
     }
 
     function removeFavourite(ref) {
@@ -446,6 +477,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function updateFavourites() {
         
+        //Update local storage 
+        localStorage.setItem("favDriver", JSON.stringify(favDriver));
+        localStorage.setItem("favCircuit", JSON.stringify(favCircuit));
+        localStorage.setItem("favConstructor", JSON.stringify(favConstructor));
+
         const driv = document.querySelector("#favDriver");
         const con = document.querySelector("#favConstructor");
         const cir = document.querySelector("#favCircuit");
@@ -453,9 +489,10 @@ document.addEventListener('DOMContentLoaded', function () {
         con.innerHTML = null;
         cir.innerHTML = null;
        
-        driv.appendChild(document.createTextNode("Drivers: "))
-        con.appendChild(document.createTextNode("Constructors: "))
-        cir.appendChild( document.createTextNode("Circuits: "))
+        driv.appendChild(document.createTextNode("Drivers: "));
+        con.appendChild(document.createTextNode("Constructors: "));
+        cir.appendChild( document.createTextNode("Circuits: "));
+
         const ul1 = document.createElement("ul");
         const ul2 = document.createElement("ul");
         const ul3 = document.createElement("ul");
@@ -467,7 +504,7 @@ document.addEventListener('DOMContentLoaded', function () {
             li.setAttribute("id", thingy.ref);
             li.classList.add("faveDriv")
             li.appendChild(document.createTextNode(thingy.name));
-           // li.textContent = thingy.name;
+          
             const button = document.createElement("button");
             button.setAttribute("value", thingy.ref);
             button.textContent = "x";
@@ -476,10 +513,11 @@ document.addEventListener('DOMContentLoaded', function () {
           
         })
         favConstructor.forEach(thingy => {
+
             const li = document.createElement("li");
             li.setAttribute("id", thingy.ref);
             li.appendChild(document.createTextNode(thingy.name));
-           // li.textContent = thingy.name;
+           
             const button = document.createElement("button");
             button.textContent = "x";
             button.setAttribute("value", thingy.ref);
@@ -489,10 +527,11 @@ document.addEventListener('DOMContentLoaded', function () {
             ul2.appendChild(li);
         })
         favCircuit.forEach(thingy => {
+
             const li = document.createElement("li");
             li.setAttribute("id", thingy.ref);
             li.appendChild(document.createTextNode(thingy.name));
-            // li.textContent = thingy.name;
+           
              const button = document.createElement("button");
              button.textContent = "x";
              button.setAttribute("value", thingy.ref);
@@ -508,11 +547,12 @@ document.addEventListener('DOMContentLoaded', function () {
     //Event listener to trigger dialogs for favourites
     document.querySelector("#favourites").addEventListener("click", (e) => {
         if (e.target.nodeName == "LI") {
-            console.log(e.target);
+            
             if (e.target.classList.contains("faveDriv")) {
                 driverPopUp(e.target.id);
             } else if (e.target.classList.contains("faveCon")) {
                 constructorPopUp(e.target.id);
+               
             } else if (e.target.classList.contains("faveCir")) {
                 circuitPopUp(e.target.id);
             } 
@@ -523,7 +563,9 @@ document.addEventListener('DOMContentLoaded', function () {
             removeFavourite(e.target.value);
         }
     });
-    
+    document.querySelector(".top3 .centre").addEventListener("click", (e)=> {
+        driverPopUp(e.target.id);
+    })
 
 
 
@@ -551,13 +593,16 @@ document.addEventListener('DOMContentLoaded', function () {
         div.appendChild(p);
     }
     function displayCircuitDial(info, circ) {
+
         document.querySelector(".cirinformation").innerHTML = null;
         document.querySelector(".cirinformation").appendChild(info);
         document.querySelector("#circuit .dialButtons .fav").setAttribute("id", circ.ref);
      
         document.querySelector("#circuit").showModal();
+        document.querySelector("#circuit .dialButtons .fav").blur();
     }
     function displayDriverDial(info, driv) {
+      
         const resultsInfo = resultData.filter(r => {
             if (r.driver.id == driv.id) {
                 return r;
@@ -567,9 +612,10 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector(".drinformation").innerHTML = null;
         document.querySelector(".drinformation").appendChild(info);
         document.querySelector("#driver .dialButtons .fav").setAttribute("id", driv.ref);
-       
+        
         dialResultsTable(resultsInfo, "#driver")
         document.querySelector("#driver").showModal();
+        document.querySelector("#driver .dialButtons .fav").blur();
     }
     function displayConstructorDial(info, cons) {
 
@@ -578,7 +624,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return r;
             }
         })
-
+        
         document.querySelector(".coninformation").innerHTML = null;
         document.querySelector(".coninformation").appendChild(info);
         document.querySelector("#constructor .dialButtons .fav").setAttribute("id", cons.ref);
@@ -586,25 +632,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
         dialResultsTable(resultsInfo, "#constructor")
         document.querySelector("#constructor").showModal();
+        document.querySelector("#constructor .dialButtons .fav").blur();
     }
 
 
     function printTop3(data) {
         
         sortByPosition(data);
-        const div3 = document.querySelectorAll(".top3");
+        const div3 = document.querySelectorAll(".top3 .centre");
+        let counter = 0;
         div3.forEach( d => {
             d.innerHTML = null;
+            d.textContent = `${data[counter].driver.forename} ${data[counter].driver.surname}`;
+            d.setAttribute("id", data[counter].driver.ref);
+            counter++;
         })
-        const first = document.createElement("h3");
-        const second = document.createElement("h3");
-        const third = document.createElement("h3");
-        first.textContent = `${data[0].driver.forename} ${data[0].driver.surname}`;
-        second.textContent =`${data[1].driver.forename} ${data[1].driver.surname}`;
-        third.textContent = `${data[2].driver.forename} ${data[2].driver.surname}`;
-        div3[0].appendChild(first);
-        div3[1].appendChild(second);
-        div3[2].appendChild(third);
+
     }
 
 
@@ -614,8 +657,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     function dialResultsTable(results, tableid) {
+
         const row1 = document.querySelector(`${tableid} tbody`);
-       console.log(tableid)
+      row1.innerHTML = null;
         for (let r of results) {
 
             const nuTr = document.createElement("tr");
@@ -653,7 +697,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function resultsTable(raceResults) {
         const row1 = document.querySelector("#resultTable tbody");
-       
+        
         for (let r of raceResults) {
 
             const nuTr = document.createElement("tr");
@@ -662,12 +706,24 @@ document.addEventListener('DOMContentLoaded', function () {
             const td1 = document.createElement("td");
             td1.textContent = r.position;
             const td2 = document.createElement("td");
-            td2.textContent = `${r.driver.forename} ${r.driver.surname}`;
+            if (favDriver.find( res => res.ref == r.driver.ref)) {
+                td2.textContent = `${r.driver.forename} ${r.driver.surname}` + " " + String.fromCodePoint("0x2764");
+               
+            } else {
+                td2.textContent = `${r.driver.forename} ${r.driver.surname}`;
+            }
+           
             td2.setAttribute("id", r.driver.ref);
             td2.classList.add("driver");
 
             const td3 = document.createElement("td");
-            td3.textContent = r.constructor.name;
+            if (favConstructor.find( res => res.ref == r.constructor.ref)) {
+                td3.textContent =  r.constructor.name + " " + String.fromCodePoint("0x2764");
+               
+            } else {
+                td3.textContent = r.constructor.name;
+            }
+           
             td3.setAttribute("id", r.constructor.ref);
             td3.classList.add("constructor");
             const td4 = document.createElement("td");
@@ -696,12 +752,22 @@ document.addEventListener('DOMContentLoaded', function () {
             const ted1 = document.createElement("td");
             ted1.textContent = r.position;
             const ted2 = document.createElement("td");
-            ted2.textContent = `${r.driver.forename} ${r.driver.surname}`;
+            if (favDriver.find( res => res.ref == r.driver.ref)) {
+                ted2.textContent = `${r.driver.forename} ${r.driver.surname}` + " " + String.fromCodePoint("0x2764");
+               
+            } else {
+                ted2.textContent = `${r.driver.forename} ${r.driver.surname}`;
+            }
             ted2.setAttribute("id", r.driver.ref);
             ted2.classList.add("driver");
 
             const ted3 = document.createElement("td");
-            ted3.textContent = r.constructor.name;
+            if (favConstructor.find( res => res.ref == r.constructor.ref)) {
+                ted3.textContent =  r.constructor.name + " " + String.fromCodePoint("0x2764");
+               
+            } else {
+                ted3.textContent = r.constructor.name;
+            }
             ted3.setAttribute("id", r.constructor.ref);
             ted3.classList.add("constructor");
             const ted4 = document.createElement("td");
@@ -882,7 +948,11 @@ document.addEventListener('DOMContentLoaded', function () {
         generateCard() {
              
             const h3 = document.createElement("h3");
+            if (this.favourited) {
+                h3.textContent = this.name + " " + String.fromCodePoint("0x2764");
+            } else {
             h3.textContent = this.name;
+            }
             
             const text = document.createTextNode(`Nationality: ${this.nationality}`);
             const p = document.createElement("p");
@@ -909,7 +979,11 @@ document.addEventListener('DOMContentLoaded', function () {
         
         generateCard() {
             const h3 = document.createElement("h3");
+            if (this.favourited) {
+                h3.textContent = this.name + " " + String.fromCodePoint("0x2764");
+            } else {
             h3.textContent = this.name;
+            }
             let place = `Location: ${this.location}, ${this.country}, at Latitude: ${this.lat} and Longitude: ${this.lng}`
             const text = document.createTextNode(place);
             const a = document.createElement("a");
@@ -936,8 +1010,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     generateCard() {
         const h3 = document.createElement("h3");
+            if (this.favourited) {
+                h3.textContent = this.name + " " + String.fromCodePoint("0x2764");
+            } else {
             h3.textContent = this.name;
-            
+            }
             const text = document.createTextNode(`Nationality: ${this.nationality}`);
             const p = document.createElement("p");
             p.appendChild(h3);

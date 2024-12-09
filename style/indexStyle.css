@@ -17,7 +17,7 @@
   :root {
 
     --blue: rgb(143, 168, 192);
-    --white: rgb(240, 240, 240);
+    --white: #f8e8ff;
     --purple: #e7bcfc;
     --darkBlue: #2b66b4;
     --darkerBlue: rgb(27, 34, 78);
@@ -37,7 +37,7 @@ main {
 
 header {
 
-    height: 20px;
+    height: 50px;
     padding: 20px;
     background-color: var(--blue)
     
@@ -125,9 +125,10 @@ img[id="logo"] {
     color:var(--black);
     
     }
+
   dialog:focus {
     box-shadow: none;
-    background-color: white;
+    background-color: var(--white);
     color:var(--black);
   }
 .footer-links {
@@ -145,15 +146,16 @@ footer {
     text-align: center;
   }
 dialog button {
-  margin: 10px;
+  margin: 1px;
   
 }
 
 button {
   font-weight: bold;
 }
+
 aside {
-  width: 390px;
+  width: 350px;
   
   height: fit-content;
   background-color: white;
@@ -170,7 +172,7 @@ a:focus {
 }
 dialog a:focus {
   box-shadow: none;
-  background-color: var(--white);
+  background-color: white;
   color:var(--darkpurple);
  
 }
@@ -195,20 +197,39 @@ aside ul li button {
 }
 #raceItem {
   background-color: var(--darkBlue);
+  
+  padding-top: 5px;
+}
+#raceItem h3 {
+  background-color: var(--lightblue);
+  margin: auto;
+  width: fit-content;
+  padding: 5px;
+  border-radius: 20px;
 }
 #raceItem div {
-  background-color: var(--blue);
+  background-color: #bdd1f7;
   display: flex;
   justify-content: center;
+  margin-top: 10px;
+  padding: 5px;
 }
 #raceItem div a {
   text-decoration: underline;
 }
 .dialButtons {
   display: inline-flex;
+  justify-content: end;
+ width: 100%;
+  padding: 0px;
+  border: 1px solid var(--darkpurple);
+  border-radius: 5px;
+  background-color: var(--blue);
 }
 .dialogDiv {
   display: inline-flex;
+  padding: 0px;
+
 }
 dialog h2 {
   background-color: var(--blue);
@@ -216,18 +237,20 @@ dialog h2 {
   border-radius: 5px;
 }
 dialog div {
-  padding: 10px;
+padding: 20px;
   background-color: white;
   border: 1px solid var(--darkpurple);
 }
 #ignore {
   border: none;
+  padding: 10px;
 }
 caption {
   font-weight: bold;
 }
 dialog {
   background-color: var(--white);
+  width: fit-content;
 }
 .dialTable {
   max-height: 400px;
@@ -257,4 +280,25 @@ td {
 
   display: inline-flex;
   padding: 10px;
+}
+.top3 {
+  position: relative;
+}
+
+.centre {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+ 
+}
+
+.top3 img { 
+  width: 150px;
+  height: auto;
+  opacity: 0.4;
+  border: 1px solid var(--darkpurple);
+  border-radius: 25px;
 }
