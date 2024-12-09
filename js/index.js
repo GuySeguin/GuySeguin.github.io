@@ -620,8 +620,11 @@ document.addEventListener('DOMContentLoaded', function () {
             removeFavourite(e.target.value);
         }
     });
-    document.querySelector(".top3 .centre").addEventListener("click", (e)=> {
-        driverPopUp(e.target.id);
+    document.querySelector("#res").addEventListener("click", (e)=> {
+        if (e.target.classList.contains("centre")) {
+            driverPopUp(e.target.id);
+        }
+        
     })
 
 
