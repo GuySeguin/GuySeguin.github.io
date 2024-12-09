@@ -3,7 +3,8 @@ COMP 3512 Assignment #2
 A single page application utilising Javascript to view race results for the season as selected by the user.
 Javascript is used extensible to lend interactivity and customizability to the webpage.
 
-Features:
+Key Features:
+
 Sortable Tables - tables of results can be sorted by any column by clicking the heading of the desired column.
 The current sorted column is indicated by a underline in the heading.
 
