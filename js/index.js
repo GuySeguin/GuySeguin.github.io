@@ -643,6 +643,7 @@ document.addEventListener('DOMContentLoaded', function () {
         p.innerHTML = null;
         p.textContent = `Round: ${raceItem.round} Year: ${raceItem.year} Circuit: ${raceItem.circuit.name} Date: ${raceItem.date} Website: `
         const a = document.createElement("a");
+        a.setAttribute("href", raceItem.url)
         a.textContent = " Race Website";
         p.appendChild(a);
         div.appendChild(p);
