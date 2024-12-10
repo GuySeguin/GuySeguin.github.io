@@ -279,12 +279,15 @@ td {
   justify-content: center;
   border: 1px solid #2b66b4;
 }
+#res {
+width: fit-content;
+margin: auto;
+}
 .top3 {
+justify-content: center;
 
   display: inline-flex;
   padding: 10px;
-}
-.top3 {
   position: relative;
 }
 
@@ -297,7 +300,9 @@ td {
   font-weight: bold;
  
 }
-
+#hide {
+  display: none;
+}
 .top3 img { 
   width: 150px;
   height: auto;
@@ -314,6 +319,10 @@ td {
   border: 2px solid var(--darkpurple);
   width: fit-content;
 }
-#raceResults {
-  margin-left: 10%;
+
+#resultsCentre {
+  width: fit-content;
+  margin: auto;
+  background-color: white;
+  border: 2px solid var(--darkpurple);
 }

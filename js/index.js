@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function listeners(data) {
     document.querySelector("#raceTable").addEventListener("click", (e)=> {
         if (e.target.nodeName=="BUTTON") {
-
+            document.querySelector("#hide").style.display = "block";
             document.querySelector("#resultTable tbody").innerHTML = null;
             document.querySelector("#raceResults").style.display = "inline-flex";
             document.querySelector("#qualifyingTable tbody").innerHTML = null;
