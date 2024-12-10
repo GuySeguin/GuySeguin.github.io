@@ -331,3 +331,6 @@ justify-content: center;
   background-color: white;
   border: 2px solid var(--darkpurple);
 }
+select:focus {
+  background-color: white;
+}
