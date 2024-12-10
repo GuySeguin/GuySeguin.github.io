@@ -17,7 +17,7 @@
   :root {
 
     --blue: rgb(143, 168, 192);
-    --white: #f8e8ff;
+    --white: #efdaf8;
     --purple: #e7bcfc;
     --darkBlue: #2b66b4;
     --darkerBlue: rgb(27, 34, 78);
@@ -264,6 +264,7 @@ dialog {
 
 #raceStuff {
   display: inline-flex;
+  
 }
 table {
   margin: 20px;
