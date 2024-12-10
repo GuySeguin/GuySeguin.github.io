@@ -17,12 +17,12 @@
   :root {
 
     --blue: rgb(143, 168, 192);
-    --white: #efdaf8;
+    --white: #f6e9fa;
     --purple: #e7bcfc;
     --darkBlue: #2b66b4;
     --darkerBlue: rgb(27, 34, 78);
     --darkpurple: rgb(45, 21, 83);
-    --lightblue: rgb(229, 198, 247);
+    --lightblue: rgb(216, 234, 247);
     --black: rgb(0, 0, 0);
 
   }
@@ -301,7 +301,19 @@ td {
 .top3 img { 
   width: 150px;
   height: auto;
-  opacity: 0.3;
+  opacity: 0.4;
   border: 1px solid var(--darkpurple);
   border-radius: 25px;
+}
+#homeView {
+  background-color: white;
+  border-radius: 25px;
+  margin-left: 25%;
+  margin-bottom: 10%;
+  padding: 20px;
+  border: 2px solid var(--darkpurple);
+  width: fit-content;
+}
+#raceResults {
+  margin-left: 10%;
 }
