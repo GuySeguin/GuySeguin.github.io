@@ -185,6 +185,7 @@ aside ul {
 }
 aside ul li {
   text-decoration: underline;
+  margin-top: 3px;
   
 }
 td:nth-child(odd) {
@@ -313,13 +314,17 @@ justify-content: center;
 #homeView {
   background-color: white;
   border-radius: 25px;
-  margin-left: 25%;
+  width: fit-content;
+  margin: auto;
   margin-bottom: 10%;
   padding: 20px;
   border: 2px solid var(--darkpurple);
-  width: fit-content;
+  
 }
-
+#raceCentre {
+  width: fit-content;
+  margin: auto;
+}
 #resultsCentre {
   width: fit-content;
   margin: auto;

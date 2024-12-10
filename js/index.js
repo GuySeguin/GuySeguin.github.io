@@ -561,7 +561,7 @@ document.addEventListener('DOMContentLoaded', function () {
           
             const button = document.createElement("button");
             button.setAttribute("value", thingy.ref);
-            button.textContent = "x";
+            button.textContent = "X";
             li.appendChild(button);
             ul1.appendChild(li);
           
@@ -573,7 +573,7 @@ document.addEventListener('DOMContentLoaded', function () {
             li.appendChild(document.createTextNode(thingy.name));
            
             const button = document.createElement("button");
-            button.textContent = "x";
+            button.textContent = "X";
             button.setAttribute("value", thingy.ref);
             li.appendChild(button);
             li.classList.add("faveCon")
@@ -588,7 +588,7 @@ document.addEventListener('DOMContentLoaded', function () {
             li.appendChild(document.createTextNode(thingy.name));
            
              const button = document.createElement("button");
-             button.textContent = "x";
+             button.textContent = "X";
              button.setAttribute("value", thingy.ref);
              li.appendChild(button);
             li.classList.add("faveCir")
